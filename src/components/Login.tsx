@@ -40,10 +40,10 @@ export default function Login() {
         backgroundSize: "contain",
         backgroundAttachment: "fixed",
       }}
-      className="bg-white relative items-center justify-center flex w-full h-[100vh]"
+      className="bg-white items-center justify-center flex w-full h-[100vh]"
     >
       <ToastContainer />
-      <div>
+      <div className="relative">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center gap-[16px] justify-center pb-[40px]">
             <img src="/logo.svg" alt="" />
@@ -74,7 +74,7 @@ export default function Login() {
 
           <div>
             <button
-              className="bg-[#EE5335] text-[#FFFFFF] absolute bottom-[170px] right-[560.5px] w-[342px] h-[48px] rounded-[7px] py-[8px] px-[10px] text-[14px] font-[600] "
+              className="bg-[#EE5335] text-[#FFFFFF] absolute bottom-[-80px]  w-[342px] h-[48px] rounded-[7px] py-[8px] px-[10px] text-[14px] font-[600] "
               type="submit"
             >
               შესვლა
