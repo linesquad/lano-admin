@@ -56,7 +56,7 @@ export default function Login() {
                   className="h-[48px] py-[8px]  text-[14px] w-[342px] px-[16px] rounded-[7px] border border-[#00000066] bg-[#FFF]"
                   {...register("password", { required: "პაროლი სავალდებულოა" })}
                 />
-                <div className="h-[5px]">
+                <div className="h-[20px]">
                   {(errors.name || errors.password) && (
                     <span className="text-[#EE5335]  text-[13px]">
                       შეავსეთ ორივე ველი
