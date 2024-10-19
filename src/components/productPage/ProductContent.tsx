@@ -3,6 +3,7 @@ import ProductsContentDisplay from "./ProductsContentDisplay";
 
 const ProductContent = () => {
   const { data, isError, isLoading, error } = useGetAllProducts();
+  console.log(data);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -22,9 +23,12 @@ const ProductContent = () => {
         <li>SALE</li>
         <li>ცვლილება</li>
       </ul>
-      <hr />
-      {data.products.map((item) => {
-        return <ProductsContentDisplay item={item} />;
+      {data?.products.map((item) => {
+        return (
+          <div key={item._id}>
+            <ProductsContentDisplay item={item} />
+          </div>
+        );
       })}
       <hr />
     </div>

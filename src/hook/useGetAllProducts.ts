@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { fetchAllProducts } from "../services/apiProducts";
+import { ProductResponse } from "../types/Product";
 
-export const useGetAllProducts = () => {
-  const { data, isError, isLoading, error } = useQuery({
-    queryFn: fetchAllProducts,
+export const useGetAllProducts = (): UseQueryResult<ProductResponse, Error> => {
+  return useQuery<ProductResponse, Error>({
     queryKey: ["allProducts"],
+    queryFn: fetchAllProducts,
     refetchOnWindowFocus: false,
   });
-
-  return { data, isError, isLoading, error };
 };
