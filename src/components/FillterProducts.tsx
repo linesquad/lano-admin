@@ -59,20 +59,26 @@ export default function FillterProducts({
             onClick={() => setIsFillterModalOpen(false)}
           />
         </div>
-        <div className="mt-[40px] flex flex-col gap-[40px]">
-          <FillterOneField
-            title="კატეგორია"
-            fillterItems={categoryItems}
-            fillter={category}
-            setFillter={setCategory}
-          />
-          <FillterOneField
-            title="დანიშნულება"
-            fillterItems={purposeItems}
-            fillter={purpose}
-            setFillter={setPurpose}
-          />
+        <div>
+          <div className="mt-[40px] flex flex-col gap-[40px]">
+            <FillterOneField
+              title="კატეგორია"
+              fillterItems={categoryItems}
+              fillter={category}
+              setFillter={setCategory}
+            />
+            <FillterOneField
+              title="დანიშნულება"
+              fillterItems={purposeItems}
+              fillter={purpose}
+              setFillter={setPurpose}
+            />
+          </div>
+          <button className="w-[124px] h-[40px] mt-[10px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
+            არჩევა
+          </button>
         </div>
+
         <div className="mt-[40px] flex flex-col gap-[16px]">
           <p className="text-[14px] text-[#000000] font-semibold">ფასი</p>
           <div className="flex items-center gap-[10px]">
@@ -90,6 +96,9 @@ export default function FillterProducts({
               value={finalPrice}
               onChange={(e) => setFinalPrice(e.target.value)}
             />
+            <button className="w-[124px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
+              არჩევა
+            </button>
           </div>
         </div>
         <div className="mt-[40px] flex items-center gap-[8px]">
@@ -98,6 +107,9 @@ export default function FillterProducts({
             className="w-[22px] h-[22px] rounded-[4px] cursor-pointer"
           />
           <p className="text-[14px] text-[#000000] font-semibold">SALE</p>
+          <button className="w-[124px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
+            არჩევა
+          </button>
         </div>
         <div className="mt-[64px] flex items-center justify-center gap-[20px]">
           <button
@@ -105,9 +117,6 @@ export default function FillterProducts({
             onClick={hanfleFillterReset}
           >
             გასუფთავება
-          </button>
-          <button className="w-[174px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
-            არჩევა
           </button>
         </div>
       </div>
