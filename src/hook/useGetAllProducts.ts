@@ -5,6 +5,7 @@ export const useGetAllProducts = () => {
   const { data, isError, isLoading, error } = useQuery({
     queryFn: fetchAllProducts,
     queryKey: ["allProducts"],
+    refetchOnWindowFocus: false,
   });
 
   return { data, isError, isLoading, error };
