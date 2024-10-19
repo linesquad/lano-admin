@@ -1,6 +1,6 @@
 import { FaTimes } from "react-icons/fa";
 import FillterOneField from "./FillterOneField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const categoryItems = [
   { value: "ძაღლები" },
@@ -15,7 +15,13 @@ const purposeItems = [
   { value: "სათამაშო" },
 ];
 
-export default function FillterProducts() {
+interface FillterProductsProps {
+  setIsFillterModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function FillterProducts({
+  setIsFillterModalOpen,
+}: FillterProductsProps) {
   const [category, setCategory] = useState("");
   const [purpose, setPurpose] = useState("");
   const [starterPrice, setStarterPrice] = useState("");
@@ -28,12 +34,30 @@ export default function FillterProducts() {
     setFinalPrice("");
   }
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
-    <div className="fixed top-0 right-0 bottom-0 left-0 bg-[#000]/80 flex items-center justify-center">
-      <div className="w-[613px] bg-[#fff] pt-[45px] pb-[40px] px-[20px] rounded-[16px]">
+    <div
+      className="fixed top-0 right-0 bottom-0 left-0 bg-[#000]/80 flex items-center justify-center"
+      onClick={() => setIsFillterModalOpen(false)}
+    >
+      <div
+        className="w-[613px] bg-[#fff] pt-[45px] pb-[40px] px-[20px] rounded-[16px]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center">
           <h2 className="text-[16px] text-[#000] font-semibold">ფილტრაცია</h2>
-          <FaTimes size={24} cursor="pointer" />
+          <FaTimes
+            size={24}
+            cursor="pointer"
+            onClick={() => setIsFillterModalOpen(false)}
+          />
         </div>
         <div className="mt-[40px] flex flex-col gap-[40px]">
           <FillterOneField
