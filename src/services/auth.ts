@@ -10,7 +10,7 @@ export const login = (
   inputUsername: string,
   inputPassword: string
 ): boolean => {
-  console.log(inputUsername, "  inputUsername");
+  console.log(inputUsername, " inputUsername");
   const storedUsername = localStorage.getItem("username") as string;
   const storedPassword = localStorage.getItem("password") as string;
 

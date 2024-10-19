@@ -19,10 +19,10 @@ export default function Login() {
 
     const success = login(data.name, data.password);
     if (success) {
-      toast("Login successful!");
+      toast.success("Login successful!");
       console.log("Login successful!");
     } else {
-      toast("Invalid credentials");
+      toast.error("Invalid credentials");
       console.log("Invalid credentials");
     }
   };
