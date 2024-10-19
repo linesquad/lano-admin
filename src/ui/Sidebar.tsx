@@ -5,7 +5,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
   return (
-    <div className="w-[214px] bg-[#fff] h-[100vh] py-[40px] px-[17px] flex flex-col justify-between">
+    <div className="sticky top-0 left-0 w-[214px] bg-[#fff] h-[100vh] py-[40px] px-[17px] flex flex-col justify-between">
       <div>
         <img src={logo} alt="logo" />
         <NavLink
