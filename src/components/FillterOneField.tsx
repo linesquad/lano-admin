@@ -23,7 +23,7 @@ export default function FillterOneField({
               className={`p-[10px] bg-[#F7F7F9] rounded-[7px] cursor-pointer ${
                 fillter === item.value
                   ? "border-[1px] border-[#EE5335] text-[#EE5335]"
-                  : ""
+                  : "border-[1px] border-transparent"
               }`}
               key={item.value}
               onClick={() => setFillter(item.value)}
