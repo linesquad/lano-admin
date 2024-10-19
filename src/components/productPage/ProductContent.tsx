@@ -13,6 +13,10 @@ const ProductContent = () => {
     return <p>{error?.message}</p>;
   }
 
+  if (!data) {
+    return <p>No data</p>;
+  }
+
   return (
     <div className="bg-white rounded-lg px-5">
       <ul className="grid grid-cols-[2fr_repeat(5,_1fr)] text-black font-semibold text-sm py-5">
@@ -23,7 +27,7 @@ const ProductContent = () => {
         <li>SALE</li>
         <li>ცვლილება</li>
       </ul>
-      {data?.products.map((item) => {
+      {data.products.map((item) => {
         return (
           <div key={item._id}>
             <ProductsContentDisplay item={item} />
