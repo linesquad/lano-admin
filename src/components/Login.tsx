@@ -1,13 +1,20 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-export default function SignIn() {
+interface IFormInput {
+  name: string;
+  password: string;
+}
+
+export default function Login() {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+  } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(data);
+  };
 
   return (
     <div
@@ -33,19 +40,22 @@ export default function SignIn() {
             <input
               className=" h-[48px] py-[8px] text-[14px] w-[342px] px-[16px] rounded-[7px] border border-[#00000066] bg-[#FFF]"
               placeholder="სახელი"
-              {...register("name", { required: true })}
+              {...register("name", { required: "სახელი სავალდებულოა" })}
             />
 
             <input
               placeholder="პაროლი"
+              type="password"
               className=" h-[48px] py-[8px] text-[14px] w-[342px] px-[16px] rounded-[7px] border border-[#00000066] bg-[#FFF]"
-              {...register("password", { required: true })}
+              {...register("password", { required: "პაროლი სავალდებულოა" })}
             />
-            {(errors.name || errors.password) && (
-              <span className="text-[#EE5335] text-[13px] ">
-                შეავსეთ ორივე ველი
-              </span>
-            )}
+            <div className="h-[5px]">
+              {(errors.name || errors.password) && (
+                <span className="text-[#EE5335]  text-[13px] ">
+                  შეავსეთ ორივე ველი
+                </span>
+              )}
+            </div>
           </div>
 
           <div>
