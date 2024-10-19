@@ -4,7 +4,6 @@ export const setupLocalAuth = () => {
 
   localStorage.setItem("username", username);
   localStorage.setItem("password", password);
-  localStorage.setItem("isAuthenticated", "false");
 };
 
 export const login = (
