@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const AppLayout = () => {
   return (
-    <div>
+    <div className="flex">
       <Sidebar />
       <Container>
         <Outlet />
