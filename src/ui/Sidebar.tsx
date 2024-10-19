@@ -1,9 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "/images/logo.svg";
 import { FaBoxOpen } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
+import { logout } from "../services/auth";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  function handleLogOut() {
+    logout();
+    navigate("/login");
+  }
+
   return (
     <div className="sticky top-0 left-0 w-[214px] bg-[#fff] h-[100vh] py-[40px] px-[17px] flex flex-col justify-between">
       <div>
@@ -20,7 +28,10 @@ const Sidebar = () => {
           <p className="text-[14px]">პროდუქტები</p>
         </NavLink>
       </div>
-      <div className="pl-[14px] py-[10px] rounded-[8px] flex items-center gap-[11px] cursor-pointer">
+      <div
+        className="pl-[14px] py-[10px] rounded-[8px] flex items-center gap-[11px] cursor-pointer"
+        onClick={handleLogOut}
+      >
         <FaSignOutAlt />
         <p className="text-[14px]">გამოსვლა</p>
       </div>
