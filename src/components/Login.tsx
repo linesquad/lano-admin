@@ -1,5 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { login } from "../services/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface IFormInput {
   name: string;
   password: string;
@@ -14,6 +16,15 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
+
+    const success = login(data.name, data.password);
+    if (success) {
+      toast("Login successful!");
+      console.log("Login successful!");
+    } else {
+      toast("Invalid credentials");
+      console.log("Invalid credentials");
+    }
   };
 
   return (
@@ -29,6 +40,7 @@ export default function Login() {
       }}
       className="bg-white relative items-center justify-center flex w-full h-[100vh]"
     >
+      <ToastContainer />
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center gap-[16px] justify-center pb-[40px]">

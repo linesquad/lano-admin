@@ -2,7 +2,7 @@ export const setupLocalAuth = () => {
   const username = "micheal obama" as string;
   const password = "12345678" as string;
 
-  localStorage.setItem("usename", username);
+  localStorage.setItem("username", username);
   localStorage.setItem("password", password);
 };
 
@@ -10,6 +10,7 @@ export const login = (
   inputUsername: string,
   inputPassword: string
 ): boolean => {
+  console.log(inputUsername, "  inputUsername");
   const storedUsername = localStorage.getItem("username") as string;
   const storedPassword = localStorage.getItem("password") as string;
 
