@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../services/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 interface IFormInput {
   name: string;
   password: string;
@@ -13,13 +14,14 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
 
     const success = login(data.name, data.password);
     if (success) {
       toast.success("Login successful!");
+      navigate("/");
       console.log("Login successful!");
     } else {
       toast.error("Invalid credentials");
