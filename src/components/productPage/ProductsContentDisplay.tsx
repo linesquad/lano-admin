@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Product } from "../../types/Product";
 
 const ProductsContentDisplay: FC<{ item: Product }> = ({ item }) => {
+  console.log(item, "item");
   return (
     <>
       <hr />

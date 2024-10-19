@@ -1,11 +1,11 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { fetchAllProducts } from "../services/apiProducts";
-import { ProductResponse } from "../types/Product";
+import { useQuery } from "@tanstack/react-query";
 
-export const useGetAllProducts = (): UseQueryResult<ProductResponse, Error> => {
+import { ProductResponse } from "../types/Product";
+import { fetchAllProducts } from "../services/apiProducts";
+
+export const useGetAllProducts = (page: number) => {
   return useQuery<ProductResponse, Error>({
-    queryKey: ["allProducts"],
-    queryFn: fetchAllProducts,
-    refetchOnWindowFocus: false,
+    queryKey: ["products", page],
+    queryFn: () => fetchAllProducts(page),
   });
 };
