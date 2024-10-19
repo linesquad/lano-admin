@@ -1,5 +1,5 @@
 export interface Product {
-  brand: string;
+  title: string;
   animalType: string;
   image: string;
   productType: string;
