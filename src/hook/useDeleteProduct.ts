@@ -1,4 +1,5 @@
 import {
+  InvalidateQueryFilters,
   useMutation,
   UseMutationResult,
   useQueryClient,
@@ -14,7 +15,7 @@ export const useDeleteProducts = (): UseMutationResult<void, Error, string> => {
     },
     onSuccess: () => {
       console.log("Product delete success");
-      queryClient.invalidateQueries(["allProducts"]);
+      queryClient.invalidateQueries(["allProducts"] as InvalidateQueryFilters);
     },
   });
 };
