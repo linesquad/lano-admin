@@ -19,3 +19,23 @@ export const fetchAllProducts = async (): Promise<ProductResponse> => {
     throw new Error("An unknown error occurred");
   }
 };
+
+export const deleteProductById = async (id: string): Promise<void> => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/product?productId=${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    console.log(`Product with ID ${id} has been deleted.`);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("SIngle product fetch failed: " + error.message);
+      throw error;
+    }
+    throw new Error("An unknown error occured");
+  }
+};

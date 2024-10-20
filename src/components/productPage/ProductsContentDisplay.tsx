@@ -1,7 +1,16 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Product } from "../../types/Product";
+import { useDeleteProducts } from "../../hook/useDeleteProduct";
+import DeleteModal from "./DeleteModal";
 
 const ProductsContentDisplay: FC<{ item: Product }> = ({ item }) => {
+  const { mutate: deleteProduct } = useDeleteProducts();
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleDeleteProduct = () => {
+    deleteProduct(item._id);
+    setModalOpen(false);
+  };
   return (
     <>
       <hr />
@@ -18,11 +27,17 @@ const ProductsContentDisplay: FC<{ item: Product }> = ({ item }) => {
           <button>
             <img src="/edit.svg" alt="edit" />
           </button>
-          <button>
+          <button onClick={() => setModalOpen(true)}>
             <img src="/delete.svg" alt="delete" />
           </button>
         </li>
       </ul>
+
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDeleteProduct}
+      />
     </>
   );
 };

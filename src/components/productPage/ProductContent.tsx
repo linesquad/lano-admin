@@ -5,7 +5,6 @@ import ProductsContentDisplay from "./ProductsContentDisplay";
 
 const ProductContent = () => {
   const { data, isError, isLoading, error } = useGetAllProducts();
-  console.log(data);
 
   if (isLoading) {
     return (

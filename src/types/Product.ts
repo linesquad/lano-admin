@@ -20,3 +20,9 @@ export interface StyleErrorAndLoading {
   width: string;
   height: string;
 }
+
+export interface ConfirmationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}
