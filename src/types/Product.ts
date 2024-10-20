@@ -15,3 +15,8 @@ export interface ProductResponse {
   page: number;
   lenBtns: number;
 }
+
+export interface StyleErrorAndLoading {
+  width: string;
+  height: string;
+}

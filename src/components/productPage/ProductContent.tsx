@@ -1,4 +1,6 @@
 import { useGetAllProducts } from "../../hook/useGetAllProducts";
+import Error from "../../ui/Error";
+import Loading from "../../ui/Loading";
 import ProductsContentDisplay from "./ProductsContentDisplay";
 
 const ProductContent = () => {
@@ -6,11 +8,20 @@ const ProductContent = () => {
   console.log(data);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex justify-center">
+        <Loading width="400px" height="300px" />
+      </div>
+    );
   }
 
   if (isError) {
-    return <p>{error?.message}</p>;
+    return (
+      <div className="flex justify-center items-center">
+        <Error width="400px" height="300px" />
+        <span className="text-xl text-red-600 font-bold">{error.message}</span>
+      </div>
+    );
   }
 
   if (!data) {
