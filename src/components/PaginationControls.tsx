@@ -32,12 +32,12 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
     const end = Math.min(totalPages - 1, currentPage + 1);
 
     for (let i = start; i <= end; i++) {
-      if (i !== 1 && i !== totalPages) {
+      if (totalPages <= 4 || (i !== 1 && i !== totalPages)) {
         items.push(i);
       }
     }
 
-    if (currentPage < totalPages - 3) {
+    if (currentPage < totalPages - 2) {
       items.push("...");
     }
 
