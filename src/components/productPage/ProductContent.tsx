@@ -1,10 +1,22 @@
+import { useLocation } from "react-router-dom";
 import { useGetAllProducts } from "../../hook/useGetAllProducts";
 import Error from "../../ui/Error";
 import Loading from "../../ui/Loading";
 import ProductsContentDisplay from "./ProductsContentDisplay";
+import PaginationControls from "../PaginationControls";
+import { Product } from "../../types/Product";
 
 const ProductContent = () => {
-  const { data, isError, isLoading, error } = useGetAllProducts();
+  const location = useLocation();
+
+  const getCurrentPage = () => {
+    const params = new URLSearchParams(location.search);
+    return Number(params.get("page")) || 1;
+  };
+
+  const currentPage = getCurrentPage();
+
+  const { data, isError, isLoading, error } = useGetAllProducts(currentPage);
 
   if (isLoading) {
     return (
@@ -23,8 +35,8 @@ const ProductContent = () => {
     );
   }
 
-  if (!data) {
-    return <p>No data</p>;
+  if (!data || data.products.length === 0) {
+    return <p>No data available</p>;
   }
 
   return (
@@ -37,14 +49,14 @@ const ProductContent = () => {
         <li>SALE</li>
         <li>ცვლილება</li>
       </ul>
-      {data.products.map((item) => {
-        return (
-          <div key={item._id}>
-            <ProductsContentDisplay item={item} />
-          </div>
-        );
-      })}
+      {data.products.map((item: Product) => (
+        <div key={item._id}>
+          <ProductsContentDisplay item={item} />
+        </div>
+      ))}
       <hr />
+
+      <PaginationControls btnCount={data.lenBtns} />
     </div>
   );
 };

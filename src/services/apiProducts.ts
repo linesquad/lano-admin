@@ -1,9 +1,11 @@
 import { ProductResponse } from "../types/Product";
 
-export const fetchAllProducts = async (): Promise<ProductResponse> => {
+export const fetchAllProducts = async (
+  page: number
+): Promise<ProductResponse> => {
   try {
     const response = await fetch(
-      "http://localhost:8000/product?products=true&page=1"
+      `http://localhost:8000/product?products=true&page=${page}`
     );
 
     if (!response.ok) throw new Error(`Error: ${response.status}`);
