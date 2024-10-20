@@ -27,15 +27,12 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full flex justify-end">
-      <div className="bg-white relative flex items-center justify-end w-[1400px] ">
+    <div>
+      <div className="bg-white relative mx-auto flex items-center justify-center w-[1200px] h-[700px] ">
         <ToastContainer />
-        <div className="w-[324px] ">
-          <form
-            className="flex flex-col absolute  right-[439px] bottom-[160px]  "
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div className="pl-[40px] mb-[20px]">
+        <div className="w-[324px]  ">
+          <form className="flex flex-col   " onSubmit={handleSubmit(onSubmit)}>
+            <div className=" mt-[70px] mb-[20px]">
               <div className="flex items-center gap-[16px] justify-center pb-[40px]">
                 <img src="/logo.svg" alt="" />
                 <span className="text-[#EE5335] text-[24px] font-[400]">
@@ -67,7 +64,7 @@ export default function Login() {
             </div>
             <div>
               <button
-                className="bg-[#EE5335]  text-[#FFFFFF] w-[342px] h-[48px] rounded-[7px] py-[8px] px-[10px] text-[14px] font-[600] "
+                className="bg-[#EE5335] ml-[-40px] text-[#FFFFFF] w-[342px] h-[48px] rounded-[7px] py-[8px] px-[10px] text-[14px] font-[600] "
                 type="submit"
               >
                 შესვლა
@@ -75,7 +72,11 @@ export default function Login() {
             </div>
           </form>
         </div>
-        <img className="h-[700px]" src="/loginGB.svg" alt="" />
+        <img
+          className="h-[700px] absolute top-[0px] right-[-20px]"
+          src="/loginGB.svg"
+          alt=""
+        />
       </div>
     </div>
   );
