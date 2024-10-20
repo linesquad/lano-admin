@@ -62,7 +62,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         onClick={() => handlePageChange(currentPage - 1)}
       >
         <img
-          src="public/Arrow.svg"
+          src="/Arrow.svg"
           alt="prev arrow"
           width={24}
           height={24}
@@ -95,7 +95,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         className="text-white p-1"
         onClick={() => handlePageChange(currentPage + 1)}
       >
-        <img src="public/Arrow.svg" alt="next arrow" width={24} height={24} />
+        <img src="/Arrow.svg" alt="next arrow" width={24} height={24} />
       </button>
     </div>
   );
