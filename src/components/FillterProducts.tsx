@@ -1,19 +1,8 @@
 import { FaTimes } from "react-icons/fa";
 import FillterOneField from "./FillterOneField";
 import { useEffect, useState } from "react";
-
-const categoryItems = [
-  { value: "ძაღლები" },
-  { value: "კატები" },
-  { value: "ჩიტები" },
-];
-
-const purposeItems = [
-  { value: "საკვები" },
-  { value: "აქსესუარები" },
-  { value: "მოვლის საშუალებები" },
-  { value: "სათამაშო" },
-];
+import { useGetAllCategories } from "../hook/useGetAllCategories";
+import { useNavigate } from "react-router-dom";
 
 interface FillterProductsProps {
   setIsFillterModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,16 +11,26 @@ interface FillterProductsProps {
 export default function FillterProducts({
   setIsFillterModalOpen,
 }: FillterProductsProps) {
-  const [category, setCategory] = useState("");
-  const [purpose, setPurpose] = useState("");
+  const [category, setCategory] = useState<number | null>(null);
+  const [categoryId, setCategoryId] = useState("");
   const [starterPrice, setStarterPrice] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
 
+  const navigate = useNavigate();
+
+  const { data: categories } = useGetAllCategories();
+  console.log(categories);
+
   function hanfleFillterReset() {
-    setCategory("");
-    setPurpose("");
+    setCategory(null);
+    setCategoryId("");
     setStarterPrice("");
     setFinalPrice("");
+  }
+
+  function handleChooseCategory() {
+    navigate(`/products/${categoryId}`);
+    setIsFillterModalOpen(false);
   }
 
   useEffect(() => {
@@ -41,6 +40,10 @@ export default function FillterProducts({
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  if (!categories) {
+    return <p>No Categories to show</p>;
+  }
 
   return (
     <div
@@ -60,23 +63,24 @@ export default function FillterProducts({
           />
         </div>
         <div>
-          <div className="mt-[40px] flex flex-col gap-[40px]">
+          <div className="mt-[40px] ">
             <FillterOneField
               title="კატეგორია"
-              fillterItems={categoryItems}
-              fillter={category}
-              setFillter={setCategory}
-            />
-            <FillterOneField
-              title="დანიშნულება"
-              fillterItems={purposeItems}
-              fillter={purpose}
-              setFillter={setPurpose}
+              fillterItems={categories}
+              category={category}
+              setCategory={setCategory}
+              categoryId={categoryId}
+              setCategoryId={setCategoryId}
             />
           </div>
-          <button className="w-[124px] h-[40px] mt-[10px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
-            არჩევა
-          </button>
+          {category !== null && categoryId !== "" && (
+            <button
+              className="w-[124px] h-[40px] mt-[10px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]"
+              onClick={handleChooseCategory}
+            >
+              არჩევა
+            </button>
+          )}
         </div>
 
         <div className="mt-[40px] flex flex-col gap-[16px]">
