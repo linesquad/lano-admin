@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { SearchResponse } from "../../types/Product";
+import DeleteModal from "./DeleteModal";
+import { useDeleteProducts } from "../../hook/useDeleteProduct";
 
 interface SearchedProductsModalProps {
   data: SearchResponse | undefined;
@@ -7,7 +10,13 @@ export default function SearchedProductsModal({
   data,
 }: SearchedProductsModalProps) {
   console.log(data, "from modal");
-
+  const [isModalOpen, setModalOpen] = useState(false);
+  const { mutate: deleteProduct } = useDeleteProducts();
+  const handleDeleteProduct = (id: string) => {
+    deleteProduct(id);
+    console.log(id, "id");
+    setModalOpen(false);
+  };
   return (
     <div className="absolute top-[70px] w-[400px] max-h-[300px]  overflow-y-auto left-[-21px] shadow-lg shadow-gray-500 rounded-[7px] p-[20px] flex flex-col bg-[white]">
       {data &&
@@ -15,7 +24,7 @@ export default function SearchedProductsModal({
         data.length > 0 &&
         data.map((product) => (
           <ul
-            key={product.id}
+            key={product._id}
             className="text-black font-normal flex items-center gap-[30px] text-sm py-[21px]"
           >
             <img
@@ -32,10 +41,18 @@ export default function SearchedProductsModal({
               <button className="p-2 cursor-pointer ">
                 <img src="/edit.svg" alt="edit" />
               </button>
-              <button className="p-2 cursor-pointer ">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="p-2 cursor-pointer "
+              >
                 <img src="/delete.svg" alt="delete" />
               </button>
             </li>
+            <DeleteModal
+              isOpen={isModalOpen}
+              onClose={() => setModalOpen(false)}
+              onConfirm={() => handleDeleteProduct(product._id)}
+            />
           </ul>
         ))}
     </div>

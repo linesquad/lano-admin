@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { useSearchProducts } from "../../hook/useSearching";
 import SearchedProductsModal from "./SearchedProductsModal";
