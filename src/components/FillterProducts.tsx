@@ -15,10 +15,11 @@ export default function FillterProducts({
   const [categoryId, setCategoryId] = useState("");
   const [starterPrice, setStarterPrice] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
+  const [isSaleChecked, setIsSaleChecked] = useState(false);
 
   const navigate = useNavigate();
 
-  const { data: categories } = useGetAllCategories();
+  const { data: categories, isLoading } = useGetAllCategories();
   console.log(categories);
 
   function hanfleFillterReset() {
@@ -26,6 +27,7 @@ export default function FillterProducts({
     setCategoryId("");
     setStarterPrice("");
     setFinalPrice("");
+    setIsSaleChecked(false);
   }
 
   function handleChooseCategory() {
@@ -38,6 +40,11 @@ export default function FillterProducts({
     setIsFillterModalOpen(false);
   }
 
+  function handleSaleProducts() {
+    navigate("/products/saleProducts");
+    setIsFillterModalOpen(false);
+  }
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -45,6 +52,16 @@ export default function FillterProducts({
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="fixed top-0 right-0 bottom-0 left-0 bg-[#000]/80 flex items-center justify-center">
+        <div className="w-[613px] bg-[#fff] pt-[45px] pb-[40px] px-[20px] rounded-[16px]">
+          <div className="flex justify-between items-center">Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
   if (!categories) {
     return <p>No Categories to show</p>;
@@ -133,15 +150,22 @@ export default function FillterProducts({
               )}
           </div>
         </div>
-        <div className="mt-[40px] flex items-center gap-[8px]">
+        <div className="mt-[40px] flex items-center gap-[8px] h-[40px]">
           <input
             type="checkbox"
             className="w-[22px] h-[22px] rounded-[4px] cursor-pointer"
+            checked={isSaleChecked}
+            onChange={() => setIsSaleChecked((sale) => !sale)}
           />
           <p className="text-[14px] text-[#000000] font-semibold">SALE</p>
-          <button className="w-[124px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
-            არჩევა
-          </button>
+          {isSaleChecked && (
+            <button
+              className="w-[124px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]"
+              onClick={handleSaleProducts}
+            >
+              არჩევა
+            </button>
+          )}
         </div>
         <div className="mt-[64px] flex items-center justify-center gap-[20px]">
           <button

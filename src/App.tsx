@@ -11,6 +11,7 @@ import Products from "./ui/Products";
 import AllProducts from "./ui/AllProducts";
 import CategoryProducts from "./ui/CategoryProducts";
 import PriceRangeProducts from "./ui/PriceRangeProducts";
+import SaleProducts from "./ui/SaleProducts";
 
 function App() {
   useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
             path="/products/minPrice/:minPrice/maxPrice/:maxPrice"
             element={<PriceRangeProducts />}
           />
+          <Route path="/products/saleProducts" element={<SaleProducts />} />
         </Route>
         <Route path="/products/add" element={<AddProduct />} />
         <Route path="/products/edit" element={<EditProduct />} />
