@@ -3,10 +3,26 @@ import ProductsContentDisplay from "./ProductsContentDisplay";
 
 interface ProductsContentProps {
   data: ProductResponse;
+  isLoading: boolean;
+  isError: boolean;
+  error: string;
 }
 
-const ProductContent = ({ data }: ProductsContentProps) => {
+const ProductContent = ({
+  data,
+  isLoading,
+  isError,
+  error,
+}: ProductsContentProps) => {
   console.log(data);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="bg-white rounded-lg px-5">

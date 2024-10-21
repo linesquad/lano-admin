@@ -91,18 +91,38 @@ export default function FillterProducts({
               className="w-[120px] h-[39px] pl-[10px] border-[1px] border-[#00000033] rounded-[7px]"
               placeholder="დან"
               value={starterPrice}
-              onChange={(e) => setStarterPrice(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) {
+                  setStarterPrice(value);
+                }
+              }}
+              pattern="\d*"
+              title="Please enter a valid number"
             />
+
             <input
               type="text"
               className="w-[120px] h-[39px] pl-[10px] border-[1px] border-[#00000033] rounded-[7px]"
               placeholder="მდე"
               value={finalPrice}
-              onChange={(e) => setFinalPrice(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) {
+                  setFinalPrice(value);
+                }
+              }}
+              pattern="\d*"
+              title="Please enter a valid number"
             />
-            <button className="w-[124px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
-              არჩევა
-            </button>
+
+            {starterPrice !== "" &&
+              finalPrice !== "" &&
+              Number(starterPrice) < Number(finalPrice) && (
+                <button className="w-[124px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]">
+                  არჩევა
+                </button>
+              )}
           </div>
         </div>
         <div className="mt-[40px] flex items-center gap-[8px]">
