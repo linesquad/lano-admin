@@ -1,4 +1,7 @@
-import { ProductResponse, SearchResponse } from "../types/Product";
+import {
+  ProductResponse,
+  SearchProduct,
+} from "../types/Product";
 
 export const fetchAllProducts = async (
   page: number
@@ -11,7 +14,6 @@ export const fetchAllProducts = async (
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
     const data: ProductResponse = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     if (error instanceof Error) {
@@ -44,7 +46,7 @@ export const deleteProductById = async (id: string): Promise<void> => {
 
 export const searchingProduct = async (
   input: string
-): Promise<SearchResponse> => {
+): Promise<SearchProduct[]> => {
   try {
     const response = await fetch(
       `http://localhost:8000/product?searchTerm=${input}`
@@ -52,7 +54,7 @@ export const searchingProduct = async (
 
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
-    const data: SearchResponse = await response.json();
+    const data: SearchProduct[] = await response.json();
     return data;
   } catch (error) {
     if (error instanceof Error) {

@@ -17,7 +17,6 @@ const ProductContent = ({
   isError,
   error,
 }: ProductsContentProps) => {
-  console.log(data);
 
   if (isLoading) {
     return (

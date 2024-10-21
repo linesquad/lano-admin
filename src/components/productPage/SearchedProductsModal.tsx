@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { SearchResponse } from "../../types/Product";
+import { SearchProduct } from "../../types/Product";
 import DeleteModal from "./DeleteModal";
 import { useDeleteProducts } from "../../hook/useDeleteProduct";
 
 interface SearchedProductsModalProps {
-  data: SearchResponse | undefined;
+  data: SearchProduct[] | undefined;
   onClose: () => void;
   clearInput: () => void;
   showSearchedProducts: boolean;
@@ -17,10 +17,10 @@ export default function SearchedProductsModal({
   showSearchedProducts,
   inputRef,
 }: SearchedProductsModalProps) {
-  console.log(data, "from modal");
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const { mutate: deleteProduct } = useDeleteProducts();
+  console.log(data, "our data")
   const handleDeleteProduct = (id: string) => {
     deleteProduct(id);
     console.log(id, "id");
@@ -47,7 +47,8 @@ export default function SearchedProductsModal({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose, clearInput, inputRef]);
-  console.log(showSearchedProducts, "showSearchedProducts");
+  console.log(data, "our data")
+  if(!data) return <p>No Data!</p>
   return (
     <div>
       <div
@@ -57,9 +58,7 @@ export default function SearchedProductsModal({
           "absolute top-[70px] w-[400px] max-h-[300px]  overflow-y-auto left-[-21px] shadow-lg shadow-gray-500 rounded-[7px] px-[20px] flex flex-col bg-[white]"
         }`}
       >
-        {data &&
-          Array.isArray(data) &&
-          data.length > 0 &&
+        {
           data.map((product) => (
             <ul
               key={product._id}

@@ -20,7 +20,6 @@ export default function FillterProducts({
   const navigate = useNavigate();
 
   const { data: categories, isLoading } = useGetAllCategories();
-  console.log(categories);
 
   function hanfleFillterReset() {
     setCategory(null);
