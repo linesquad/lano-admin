@@ -1,21 +1,12 @@
-import { useGetAllProducts } from "../../hook/useGetAllProducts";
+import { Product, ProductResponse } from "../../types/Product";
 import ProductsContentDisplay from "./ProductsContentDisplay";
 
-const ProductContent = () => {
-  const { data, isError, isLoading, error } = useGetAllProducts();
+interface ProductsContentProps {
+  data: ProductResponse;
+}
+
+const ProductContent = ({ data }: ProductsContentProps) => {
   console.log(data);
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return <p>{error?.message}</p>;
-  }
-
-  if (!data) {
-    return <p>No data</p>;
-  }
 
   return (
     <div className="bg-white rounded-lg px-5">
@@ -27,7 +18,7 @@ const ProductContent = () => {
         <li>SALE</li>
         <li>ცვლილება</li>
       </ul>
-      {data.products.map((item) => {
+      {data.products.map((item: Product) => {
         return (
           <div key={item._id}>
             <ProductsContentDisplay item={item} />

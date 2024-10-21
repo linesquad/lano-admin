@@ -1,4 +1,5 @@
 export interface Product {
+  title: string;
   brand: string;
   animalType: string;
   image: string;
