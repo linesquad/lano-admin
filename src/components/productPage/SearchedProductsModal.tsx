@@ -1,24 +1,48 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchResponse } from "../../types/Product";
 import DeleteModal from "./DeleteModal";
 import { useDeleteProducts } from "../../hook/useDeleteProduct";
 
 interface SearchedProductsModalProps {
   data: SearchResponse | undefined;
+  onClose: () => void;
+  clearInput: () => void;
 }
 export default function SearchedProductsModal({
   data,
+  onClose,
+  clearInput,
 }: SearchedProductsModalProps) {
   console.log(data, "from modal");
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const { mutate: deleteProduct } = useDeleteProducts();
   const handleDeleteProduct = (id: string) => {
     deleteProduct(id);
     console.log(id, "id");
-    setModalOpen(false);
+    setDeleteModalOpen(false);
   };
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        onClose();
+        clearInput();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose, clearInput]);
   return (
-    <div className="absolute top-[70px] w-[400px] max-h-[300px]  overflow-y-auto left-[-21px] shadow-lg shadow-gray-500 rounded-[7px] p-[20px] flex flex-col bg-[white]">
+    <div
+      ref={modalRef}
+      className="absolute top-[70px] w-[400px] max-h-[300px]  overflow-y-auto left-[-21px] shadow-lg shadow-gray-500 rounded-[7px] p-[20px] flex flex-col bg-[white]"
+    >
       {data &&
         Array.isArray(data) &&
         data.length > 0 &&
@@ -42,15 +66,15 @@ export default function SearchedProductsModal({
                 <img src="/edit.svg" alt="edit" />
               </button>
               <button
-                onClick={() => setModalOpen(true)}
+                onClick={() => setDeleteModalOpen(true)}
                 className="p-2 cursor-pointer "
               >
                 <img src="/delete.svg" alt="delete" />
               </button>
             </li>
             <DeleteModal
-              isOpen={isModalOpen}
-              onClose={() => setModalOpen(false)}
+              isOpen={isDeleteModalOpen}
+              onClose={() => setDeleteModalOpen(false)}
               onConfirm={() => handleDeleteProduct(product._id)}
             />
           </ul>
