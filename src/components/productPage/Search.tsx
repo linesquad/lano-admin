@@ -1,15 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchProducts } from "../../hook/useSearching";
 import SearchedProductsModal from "./SearchedProductsModal";
+import Loading from "../../ui/Loading";
 
 const Search = () => {
   const [input, setInput] = useState("");
   const [debouncedInput, setDebouncedInput] = useState<string>("");
   const { data } = useSearchProducts(debouncedInput);
   const [showSearchedProducts, setShowSearchedProducts] = useState(false);
-
+  const [loadingData, setLoadingData] = useState(false);
   useEffect(() => {
     const handler = setTimeout(() => {
+      if (input.length > 0) {
+        setLoadingData(true);
+      }
       setDebouncedInput(input.length > 0 ? input : "");
     }, 500);
 
@@ -21,10 +25,13 @@ const Search = () => {
   useEffect(() => {
     if (data && Array.isArray(data) && data.length >= 1) {
       setShowSearchedProducts(true);
+      setLoadingData(false);
       console.log("here");
     } else {
       setShowSearchedProducts(false);
+      setLoadingData(false);
     }
+    setLoadingData(false);
   }, [data]);
   console.log(data, " search data");
 
@@ -41,6 +48,11 @@ const Search = () => {
           placeholder="ძებნა"
           className="text-sm font-medium text-[rgba(0, 0, 0, 0.4)] focus:outline-none"
         />
+        {loadingData && (
+          <div className="pr-[20px]">
+            <Loading width="40px" height="30px" />
+          </div>
+        )}
       </div>
       {showSearchedProducts && (
         <SearchedProductsModal

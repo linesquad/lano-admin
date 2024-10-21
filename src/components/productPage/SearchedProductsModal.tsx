@@ -46,7 +46,7 @@ export default function SearchedProductsModal({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onClose, clearInput]);
+  }, [onClose, clearInput, inputRef]);
   console.log(showSearchedProducts, "showSearchedProducts");
   return (
     <div>
@@ -54,7 +54,7 @@ export default function SearchedProductsModal({
         ref={modalRef}
         className={`${
           showSearchedProducts &&
-          "absolute top-[70px] w-[400px] max-h-[300px]  overflow-y-auto left-[-21px] shadow-lg shadow-gray-500 rounded-[7px] p-[20px] flex flex-col bg-[white]"
+          "absolute top-[70px] w-[400px] max-h-[300px]  overflow-y-auto left-[-21px] shadow-lg shadow-gray-500 rounded-[7px] px-[20px] flex flex-col bg-[white]"
         }`}
       >
         {data &&
@@ -63,7 +63,7 @@ export default function SearchedProductsModal({
           data.map((product) => (
             <ul
               key={product._id}
-              className="text-black font-normal flex items-center gap-[30px] text-sm py-[21px]"
+              className="text-black font-normal flex items-center gap-[30px] text-sm py-[18px]"
             >
               <img
                 src={product.image}
@@ -71,7 +71,7 @@ export default function SearchedProductsModal({
                 className="w-[30px] h-[30px]"
               />
               <span className="text-nowrap">{product.title}</span>
-              <div className="flex gap-[10px]">
+              <div className="flex w-[60px] items-center justify-center gap-[10px]">
                 <li className="text-[12px] line-through text-nowrap">{`${product.price.$numberDecimal} ₾`}</li>
                 <li className="text-[#EE5335] text-[12px] text-nowrap font-semibold">{`${product.discount} ₾`}</li>
               </div>
