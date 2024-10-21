@@ -45,6 +45,11 @@ export default function FillterProducts({
     setIsFillterModalOpen(false);
   }
 
+  function handleAllProducts() {
+    navigate("/products");
+    setIsFillterModalOpen(false);
+  }
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -173,6 +178,12 @@ export default function FillterProducts({
             onClick={hanfleFillterReset}
           >
             გასუფთავება
+          </button>
+          <button
+            className="w-[174px] ml-[30px] h-[40px] rounded-[7px] border-[1px] border-[#00000033] text-[14px] text-[#fff] bg-[#EE5335]"
+            onClick={handleAllProducts}
+          >
+            ყველა პროდუქტი
           </button>
         </div>
       </div>
