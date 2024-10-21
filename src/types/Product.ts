@@ -1,5 +1,6 @@
 export interface Product {
   title: string;
+  brand: string;
   animalType: string;
   image: string;
   productType: string;
@@ -12,8 +13,8 @@ export interface Product {
 
 export interface ProductResponse {
   products: Product[];
-  page: number;
-  lenBtns: number;
+  page?: number;
+  lenBtns?: number;
 }
 
 export interface StyleErrorAndLoading {

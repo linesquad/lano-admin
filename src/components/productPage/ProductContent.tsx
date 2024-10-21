@@ -1,22 +1,23 @@
-import { useLocation } from "react-router-dom";
-import { useGetAllProducts } from "../../hook/useGetAllProducts";
 import Error from "../../ui/Error";
 import Loading from "../../ui/Loading";
+import { Product, ProductResponse } from "../../types/Product";
 import ProductsContentDisplay from "./ProductsContentDisplay";
 import PaginationControls from "../PaginationControls";
-import { Product } from "../../types/Product";
 
-const ProductContent = () => {
-  const location = useLocation();
+interface ProductsContentProps {
+  data: ProductResponse;
+  isLoading: boolean;
+  isError: boolean;
+  error: string;
+}
 
-  const getCurrentPage = () => {
-    const params = new URLSearchParams(location.search);
-    return Number(params.get("page")) || 1;
-  };
-
-  const currentPage = getCurrentPage();
-
-  const { data, isError, isLoading, error } = useGetAllProducts(currentPage);
+const ProductContent = ({
+  data,
+  isLoading,
+  isError,
+  error,
+}: ProductsContentProps) => {
+  console.log(data);
 
   if (isLoading) {
     return (
@@ -30,7 +31,7 @@ const ProductContent = () => {
     return (
       <div className="flex justify-center items-center">
         <Error width="400px" height="300px" />
-        <span className="text-xl text-red-600 font-bold">{error.message}</span>
+        <span className="text-xl text-red-600 font-bold">{error}</span>
       </div>
     );
   }
@@ -38,7 +39,7 @@ const ProductContent = () => {
   if (!data || data.products.length === 0) {
     return <p>No data available</p>;
   }
-
+  if (!data.lenBtns) return null;
   return (
     <div className="bg-white rounded-lg px-5">
       <ul className="grid grid-cols-[2fr_repeat(5,_1fr)] text-black font-semibold text-sm py-5">
