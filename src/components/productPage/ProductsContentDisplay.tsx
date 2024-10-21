@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Product } from "../../types/Product";
+import { Link } from "react-router-dom";
 
 const ProductsContentDisplay: FC<{ item: Product }> = ({ item }) => {
   return (
@@ -16,7 +17,9 @@ const ProductsContentDisplay: FC<{ item: Product }> = ({ item }) => {
         <li className="text-[#EE5335] font-semibold">{`${item.discount} ₾`}</li>
         <li className="flex gap-[33px] items-center">
           <button>
-            <img src="/edit.svg" alt="edit" />
+            <Link to="/products/edit">
+              <img src="/edit.svg" alt="edit" />
+            </Link>
           </button>
           <button>
             <img src="/delete.svg" alt="delete" />
