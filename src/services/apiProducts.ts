@@ -1,4 +1,4 @@
-import { ProductResponse } from "../types/Product";
+import { ProductResponse, SearchResponse } from "../types/Product";
 
 export const fetchAllProducts = async (
   page: number
@@ -39,5 +39,26 @@ export const deleteProductById = async (id: string): Promise<void> => {
       throw error;
     }
     throw new Error("An unknown error occured");
+  }
+};
+
+export const searchingProduct = async (
+  input: string
+): Promise<SearchResponse> => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/product?searchTerm=${input}`
+    );
+
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    const data: SearchResponse = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Product fetch failed: " + error.message);
+      throw error;
+    }
+    throw new Error("An unknown error occurred");
   }
 };
