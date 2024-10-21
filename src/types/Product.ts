@@ -26,3 +26,16 @@ export interface ConfirmationModalProps {
   onClose: () => void;
   onConfirm: () => void;
 }
+export interface SearchResponse {
+  products: SearchProduct[];
+}
+
+export interface SearchProduct {
+  _id: string;
+  title: string;
+  image: string;
+  price: {
+    $numberDecimal: string;
+  };
+  discount: number;
+}
