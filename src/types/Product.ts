@@ -13,6 +13,6 @@ export interface Product {
 
 export interface ProductResponse {
   products: Product[];
-  page: number;
-  lenBtns: number;
+  page?: number;
+  lenBtns?: number;
 }
