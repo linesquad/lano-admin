@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { ConfirmationModalProps } from "../../types/Product";
 import HungryDog from "./HungryDog";
+import { toast } from "react-toastify";
 
 const DeleteModal: FC<ConfirmationModalProps> = ({
   isOpen,
@@ -21,12 +22,14 @@ const DeleteModal: FC<ConfirmationModalProps> = ({
 
   const handleConfirm = () => {
     onConfirm();
+    toast.success("პროდუქტი წარმატებით წაიშალა ✌️");
   };
 
   const handleOnClose = () => {
     onClose();
     setHoverCount(0);
     setPosition({ top: 0, left: 0 });
+    toast.info("პროდუქტი არ წაიშალა 🫷");
   };
 
   if (!isOpen) return null;
