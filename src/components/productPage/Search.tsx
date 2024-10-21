@@ -8,28 +8,32 @@ const Search = () => {
   const [debouncedInput, setDebouncedInput] = useState<string>("");
   const [showSearchedProducts, setShowSearchedProducts] = useState(false);
   const { data, isLoading } = useSearchProducts(debouncedInput);
-
+  const [dataLoading, setDataLoading] = useState<boolean>(false);
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedInput(input.length > 0 ? input : "");
+      setDataLoading(false);
     }, 500);
-
+    setDataLoading(true);
     return () => {
       clearTimeout(handler);
+      setDataLoading(false);
     };
   }, [input]);
 
   useEffect(() => {
     if (data && Array.isArray(data) && data.length >= 1) {
       setShowSearchedProducts(true);
+      setDataLoading(false);
     } else {
       setShowSearchedProducts(false);
+      setDataLoading(false);
     }
   }, [data]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   if (isLoading) {
-    return <p>Loading ...</p>
+    return <p>Loading ...</p>;
   }
   return (
     <div className="relative">
@@ -43,6 +47,9 @@ const Search = () => {
           placeholder="ძებნა"
           className="text-sm font-medium text-[rgba(0, 0, 0, 0.4)] focus:outline-none"
         />
+        <div className=" w-[50px]">
+          {dataLoading && <Loading width="40px" height="30px" />}
+        </div>
       </div>
       {showSearchedProducts && (
         <SearchedProductsModal
