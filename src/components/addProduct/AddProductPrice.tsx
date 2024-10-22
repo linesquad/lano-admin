@@ -1,11 +1,35 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PostContext } from "../../features/PostContext";
 
 const AddProductPrice = () => {
+  const { product, setProduct } = useContext(PostContext);
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      discountFlag: newCheckedState,
+    }));
   };
+
+  const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProduct({
+      ...product,
+      price: +e.target.value,
+    });
+  };
+
+  const handleProductDiscountChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProduct({
+      ...product,
+      discount: +e.target.value,
+    });
+  };
+
   return (
     <div className="p-5 bg-white rounded-2xl mt-[29px] w-[370px]">
       <h1 className="text-[#000] font-semibold leading-normal">
@@ -22,6 +46,8 @@ const AddProductPrice = () => {
             placeholder="ფასი"
             className="outline-none border border-[#00000066] py-2 px-4 
             placeholder:text-sm placeholder:text-[#000] text-sm text-[#000] rounded-[7px] w-[122px]"
+            value={product.price}
+            onChange={handleProductPriceChange}
           />
         </div>
         <div className="flex flex-col gap-[9px] mt-[20px]">
@@ -34,6 +60,8 @@ const AddProductPrice = () => {
             placeholder="sale"
             className="outline-none border border-[#00000066] py-2 px-4 font-semibold placeholder:font-semibold
             placeholder:text-sm placeholder:text-[#EE5335] text-sm text-[#EE5335] rounded-[7px] w-[122px]"
+            value={product.discount}
+            onChange={handleProductDiscountChange}
           />
         </div>
         <div></div>

@@ -1,7 +1,4 @@
-import {
-  ProductResponse,
-  SearchProduct,
-} from "../types/Product";
+import { ProductResponse, SearchProduct } from "../types/Product";
 
 export const fetchAllProducts = async (
   page: number

@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useGetAllCategory } from "../../hook/useGetAllCategory";
 import SubCategories from "./SubCategories";
+import { PostContext } from "../../features/PostContext";
 
 const AddInfoProduct = () => {
+  const { setProduct } = useContext(PostContext);
   const [activeAnimal, setActiveAnimal] = useState<string | null>(null);
   const { data, isLoading, isError } = useGetAllCategory();
 
@@ -11,6 +13,10 @@ const AddInfoProduct = () => {
   if (!data) return <p>No Data!</p>;
 
   const handleActiveAnimal = (animalId: string) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      animalId: animalId,
+    }));
     setActiveAnimal(animalId);
   };
 
@@ -25,25 +31,24 @@ const AddInfoProduct = () => {
           <h3 className="text-[#000] text-sm leading-normal">კატეგორია</h3>
           <div className="flex gap-[10px] ">
             {data.map((animal) => (
-              
-                <div key={animal._id}>
-                  <button
-                    type="button"
-                    onClick={() => handleActiveAnimal(animal._id)}
-                    className={`text-[#000] text-sm p-[10px] rounded-[7px] ${
-                      activeAnimal === animal._id
-                        ? "border-[#EE5335] text-[#EE5335] border"
-                        : "border-transparent border"
-                    }`}
-                  >
-                    {animal.title}
-                  </button>
-                  <div className="absolute left-5 bottom-3">
-                    {activeAnimal === animal._id && (
-                      <SubCategories subData={animal.subCategory} />
-                    )}
-                  </div>
+              <div key={animal._id}>
+                <button
+                  type="button"
+                  onClick={() => handleActiveAnimal(animal._id)}
+                  className={`text-[#000] text-sm p-[10px] rounded-[7px] ${
+                    activeAnimal === animal._id
+                      ? "border-[#EE5335] text-[#EE5335] border"
+                      : "border-transparent border"
+                  }`}
+                >
+                  {animal.title}
+                </button>
+                <div className="absolute left-5 bottom-3">
+                  {activeAnimal === animal._id && (
+                    <SubCategories subData={animal.subCategory} />
+                  )}
                 </div>
+              </div>
             ))}
           </div>
         </div>

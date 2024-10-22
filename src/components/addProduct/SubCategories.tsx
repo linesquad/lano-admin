@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SubCategory } from "../../types/Category";
+import { PostContext } from "../../features/PostContext";
 
 const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
+  const { setProduct } = useContext(PostContext);
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
 
   const handleActiveProduct = (buttonName: string) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      subCategoryId: buttonName,
+    }));
     setActiveProduct(buttonName);
   };
 
   return (
     <div>
       <div className="flex flex-col gap-4">
-        <h3 className="text-[#000] text-sm leading-normal">კატეგორია</h3>
+        <h3 className="text-[#000] text-sm leading-normal">დანიშნულება</h3>
         <div className="flex gap-[10px]">
           {subData.map((categories) => (
             <div key={categories._id}>
