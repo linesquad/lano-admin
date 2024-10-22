@@ -40,3 +40,4 @@ export interface SearchProduct {
   };
   discount: number;
 }
+
