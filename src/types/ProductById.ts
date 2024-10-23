@@ -3,6 +3,8 @@ export interface ProductById {
   brand: string;
   catId: string;
   clickCount: number;
+  breed: string;
+  code: string;
   description: string;
   discount: number;
   image: string;

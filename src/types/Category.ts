@@ -1,6 +1,7 @@
 export interface Category {
   _id: string;
   title: string;
+  animalType: string;
   parentId: string | null;
   subCategory: SubCategory[];
   products: [];

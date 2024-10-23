@@ -4,6 +4,7 @@ export interface Product {
   animalType: string;
   image: string;
   productType: string;
+  catId: string;
   price: {
     $numberDecimal: string;
   };
@@ -40,4 +41,3 @@ export interface SearchProduct {
   };
   discount: number;
 }
-
