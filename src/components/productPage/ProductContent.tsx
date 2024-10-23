@@ -33,8 +33,8 @@ const ProductContent = ({
       </div>
     );
   }
-
-  if (!data || data.products.length === 0) {
+  // || data.products.length === 0
+  if (!data) {
     return <p>No data available</p>;
   }
   if (!data.lenBtns) return null;
