@@ -26,7 +26,7 @@ const ProductsContentDisplay: FC<{ item: Product }> = ({ item }) => {
         <li className="text-[#EE5335] font-semibold">{`${item.discount} ₾`}</li>
         <li className="flex gap-[33px] items-center">
           <button>
-            <Link to={`/products/edit/${item.catId}/${item._id}`}>
+            <Link to={`/products/edit/${item._id}`}>
               <img src="/edit.svg" alt="edit" />
             </Link>
           </button>

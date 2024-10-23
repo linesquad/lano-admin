@@ -1,29 +1,71 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetProductById } from "../../hook/useGetProductById";
+import { useContext } from "react";
+import { PostContext } from "../../features/PostContext";
 
 const EditProductPrice = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProductById(id as string);
+  const { setEditProduct } = useContext(PostContext);
   const [isChecked, setIsChecked] = useState(false);
   const [priceValue, setPriceValue] = useState<string>("");
-  const [saleValue, setSaleValue] = useState<string>("");
+  const [saleValue, setSaleValue] = useState<number | string>(0);
+  const [priceError, setPriceError] = useState<string | null>(null);
+  const [saleError, setSaleError] = useState<string | null>(null);
+
+  const validatePrice = (value: string) => {
+    const isValid = /^\d*\.?\d*$/.test(value);
+    setPriceError(isValid || value === "" ? null : "მხოლოდ რიცხვები!");
+    return isValid;
+  };
+
+  const validateSale = (value: string) => {
+    const isValid = /^\d*$/.test(value);
+    setSaleError(isValid || value === "" ? null : "მხოლოდ რიცხვები!");
+    return isValid;
+  };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceValue(e.target.value);
+    const inputValue = e.target.value;
+    if (validatePrice(inputValue)) {
+      setPriceValue(inputValue);
+      setEditProduct((prevProduct) => ({
+        ...prevProduct,
+        price: +inputValue,
+      }));
+    }
   };
 
   const handleSaleValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSaleValue(e.target.value);
+    const inputValue = e.target.value;
+
+    if (inputValue === "") {
+      setSaleValue(inputValue);
+      setEditProduct((prevProduct) => ({
+        ...prevProduct,
+        discount: 0,
+      }));
+      setSaleError(null);
+      return;
+    }
+
+    if (validateSale(inputValue)) {
+      setSaleValue(Number(inputValue));
+      setEditProduct((prevProduct) => ({
+        ...prevProduct,
+        discount: +inputValue,
+      }));
+    }
   };
 
   useEffect(() => {
     if (data) {
       setPriceValue(data.price.$numberDecimal || "");
-      setSaleValue(data.discount.toString() || "");
+      setSaleValue(data.discount || 0);
     }
   }, [data]);
-  
+
   useEffect(() => {
     setIsChecked(!!saleValue);
   }, [saleValue]);
@@ -51,6 +93,8 @@ const EditProductPrice = () => {
             className="outline-none border border-[#00000066] py-2 px-4 
             placeholder:text-sm placeholder:text-[#000] text-sm text-[#000] rounded-[7px] w-[122px]"
           />
+
+          <p className={`text-red-500 text-sm mt-1 h-5`}>{priceError || " "}</p>
         </div>
         <div className="flex flex-col gap-[9px] mt-[20px]">
           <label htmlFor="sale" className="text-sm text-[#000]">
@@ -65,13 +109,20 @@ const EditProductPrice = () => {
             className="outline-none border border-[#00000066] py-2 px-4 font-semibold placeholder:font-semibold
             placeholder:text-sm placeholder:text-[#EE5335] text-sm text-[#EE5335] rounded-[7px] w-[122px]"
           />
+
+          <p className={`text-red-500 text-sm mt-1 h-5`}>{saleError || " "}</p>
         </div>
       </div>
       <div className="mt-5">
         <label className="flex items-center cursor-pointer">
-          <input type="checkbox" checked={isChecked} className="hidden" readOnly/>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            className="hidden"
+            readOnly
+          />
           <div
-            className={`w-5 h-5 border border-[#EE5335] rounded-sm flex items-center justify-center ${
+            className={`w-5 h-5 border border-[#EE5335] rounded-sm flex items-center justify-center $ {
               isChecked ? "" : "bg-transparent"
             }`}
           >

@@ -1,40 +1,89 @@
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { PostContext } from "../../features/PostContext";
 import { useGetProductById } from "../../hook/useGetProductById";
-import { useEffect, useState } from "react";
 
 const EditProductDetailedDesc = () => {
+  const { editProduct, setEditProduct } = useContext(PostContext);
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProductById(id as string);
 
-  const [brandValue, setBrandValue] = useState<string>("");
-  const [breedValue, setBreedValue] = useState<string>("");
-  const [weightValue, setWeightValue] = useState<string>("");
-  const [pTypeValue, setPTypeValue] = useState<string>("");
-  const [tasteValue, setTasteValue] = useState<string>("");
-  const [pCodeValue, setPCodeValue] = useState<string>("");
+  // State for errors
+  const [errors, setErrors] = useState<{ [key: string]: string }>({
+    brand: "",
+    breed: "",
+    productType: "",
+    code: "",
+  });
 
   useEffect(() => {
     if (data) {
-      setBrandValue(data.brand || "");
-      setBreedValue(data.breed || "");
-      setWeightValue(data.mealDetails.weight || "");
-      setPTypeValue(data.productType || "");
-      setTasteValue(data.mealDetails.aroma || "");
-      setPCodeValue(data.code || "");
+      setEditProduct({
+        _id: id || "",
+        brand: data.brand,
+        breed: data.breed,
+        description: data.description,
+        title: data.title,
+        animalType: data.animalType,
+        productType: data.productType,
+        code: data.code,
+        discount: editProduct.discount,
+        price: editProduct.price,
+      });
     }
-  }, [data]);
+  }, [data, setEditProduct]);
 
-  if (!data) return <p>No Data!</p>;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+  
+    if (value === "") {
+      setEditProduct({
+        ...editProduct,
+        [name]: value,
+      });
+      setErrors((prev) => ({ ...prev, [name]: "" })); 
+      return;
+    }
+
+    const lettersOnly = /^[A-Za-zა-ჰ\s]+$/;
+    const alphanumericOnly = /^[A-Za-zა-ჰ0-9]*$/;
+
+    let errorMessage = "";
+
+    if (name === "brand" || name === "breed" || name === "productType") {
+      if (!lettersOnly.test(value)) {
+        errorMessage = "მხოლოდ ასოებია დაშვებული!";
+      }
+    } else if (name === "code") {
+      if (!alphanumericOnly.test(value)) {
+        errorMessage = "მხოლოდ რიცხვებია და ასოებია დაშვებული!";
+      }
+    }
+
+    if (errorMessage) {
+      setErrors((prev) => ({ ...prev, [name]: errorMessage }));
+    } else {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+      setEditProduct({
+        ...editProduct,
+        [name]: value,
+      });
+    }
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
+  if (!data) return <p>No Data!</p>;
 
   return (
-    <div className="p-5 bg-white rounded-2xl mt-[29px] w-[493px]">
+    <form className="p-5 bg-white rounded-2xl mt-[29px] w-[493px]">
       <div className="flex flex-col gap-5">
         <h2 className="text-[#000] font-semibold leading-normal">
           პროდუქტის დეტალური აღწერა
         </h2>
-        <form className="flex gap-5 items-center">
+
+        <div className="flex gap-5 items-center">
           <div className="flex flex-col gap-5">
             <div>
               <label
@@ -46,12 +95,14 @@ const EditProductDetailedDesc = () => {
               <input
                 id="brand"
                 type="text"
-                value={brandValue}
-                onChange={(e) => setBrandValue(e.target.value)}
+                name="brand"
                 placeholder="ბრენდი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
-            placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px] placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                value={editProduct.brand || ""}
+                onChange={handleChange}
               />
+           
+              <p className={`text-red-500 text-sm mt-1 h-5`}>{errors.brand}</p>
             </div>
             <div>
               <label
@@ -63,88 +114,62 @@ const EditProductDetailedDesc = () => {
               <input
                 id="breed"
                 type="text"
-                value={breedValue}
-                onChange={(e) => setBreedValue(e.target.value)}
                 placeholder="ჯიში"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
-            placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                name="breed"
+                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px] placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                value={editProduct.breed || ""}
+                onChange={handleChange}
               />
-            </div>
-            <div>
-              <label
-                htmlFor="weight"
-                className="text-[#000] text-sm leading-normal"
-              >
-                წონა
-              </label>
-              <input
-                id="weight"
-                type="text"
-                value={weightValue}
-                onChange={(e) => setWeightValue(e.target.value)}
-                placeholder="წონა"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
-            placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-              />
+          
+              <p className={`text-red-500 text-sm mt-1 h-5`}>{errors.breed}</p>
             </div>
           </div>
-          {/* მეორე მწკრივი */}
+
           <div className="flex flex-col gap-5">
             <div>
               <label
-                htmlFor="pType"
+                htmlFor="productType"
                 className="text-[#000] text-sm leading-normal"
               >
                 პროდუქტის ტიპი
               </label>
               <input
-                id="pType"
+                id="productType"
                 type="text"
-                value={pTypeValue}
-                onChange={(e) => setPTypeValue(e.target.value)}
+                name="productType"
                 placeholder="პროდუქტის ტიპი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
-            placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px] placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                value={editProduct.productType || ""}
+                onChange={handleChange}
               />
+            
+              <p className={`text-red-500 text-sm mt-1 h-5`}>
+                {errors.productType}
+              </p>
             </div>
             <div>
               <label
-                htmlFor="taste"
-                className="text-[#000] text-sm leading-normal"
-              >
-                არომატი
-              </label>
-              <input
-                id="taste"
-                type="text"
-                value={tasteValue}
-                onChange={(e) => setTasteValue(e.target.value)}
-                placeholder="არომატი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
-            placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="pcode"
+                htmlFor="code"
                 className="text-[#000] text-sm leading-normal"
               >
                 პროდუქტის კოდი
               </label>
               <input
-                id="pcode"
+                id="code"
                 type="text"
-                value={pCodeValue}
-                onChange={(e) => setPCodeValue(e.target.value)}
+                name="code"
                 placeholder="პროდუქტის კოდი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
-            placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px] placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
+                value={editProduct.code || ""}
+                onChange={handleChange}
               />
+             
+              <p className={`text-red-500 text-sm mt-1 h-5`}>{errors.code}</p>
             </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
 
