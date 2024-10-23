@@ -1,51 +1,117 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PostContext } from "../../features/PostContext";
 
 const AddProductDetailedDesc = () => {
   const { product, setProduct } = useContext(PostContext);
+  const [errorBrand, setErrorBrand] = useState("");
+  const [errorBreed, setErrorBreed] = useState("");
+  const [errorWeight, setErrorWeight] = useState("");
+  const [errorPType, setErrorPType] = useState("");
+  const [errorTaste, setErrorTaste] = useState("");
+  const [errorPcode, setErrorPcode] = useState("");
 
   const handleProductBrandChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     setProduct({
       ...product,
       brand: e.target.value,
     });
+
+    if (value.trim() === "") {
+      setErrorBrand("ბრენდის დასახელება არ უნდა იყოს ცარიელი");
+    } else if (value.trim().length < 2) {
+      setErrorBrand("ბრენდის დასახელება უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს");
+    } else if (value.trim().length > 15) {
+      setErrorBrand("ბრენდის დასახელება უნდა შეიცავდეს მაქსიმუმ 15 სიმბოლოს");
+    } else {
+      setErrorBrand("");
+    }
   };
 
   const handleProductBreedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     setProduct({
       ...product,
       breed: e.target.value,
     });
+
+    if (value.trim() === "") {
+      setErrorBreed("ჯიშის დასახელება არ უნდა იყოს ცარიელი");
+    } else if (value.trim().length < 2) {
+      setErrorBreed("ჯიშის დასახელება უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს");
+    } else if (value.trim().length > 15) {
+      setErrorBreed("ჯიშის დასახელება უნდა შეიცავდეს მაქსიმუმ 15 სიმბოლოს");
+    } else {
+      setErrorBreed("");
+    }
   };
 
   const handleProductWeightChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const { value } = e.target;
     setProduct({
       ...product,
       weight: e.target.value,
     });
+    if (value.trim() === "") {
+      setErrorWeight("წონა არ უნდა იყოს ცარიელი");
+    } else if (value.trim().length > 10) {
+      setErrorWeight("წონა უნდა შეიცავდეს მაქსიმუმ 10 სიმბოლოს");
+    } else {
+      setErrorWeight("");
+    }
   };
 
   const handleProducTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     setProduct({
       ...product,
       productType: e.target.value,
     });
+    if (value.trim() === "") {
+      setErrorPType("პროდუქტის ტიპი არ უნდა იყოს ცარიელი");
+    } else if (value.trim().length < 2) {
+      setErrorPType("პროდუქტის ტიპი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს");
+    } else if (value.trim().length > 15) {
+      setErrorPType("პროდუქტის ტიპი უნდა შეიცავდეს მაქსიმუმ 15 სიმბოლოს");
+    } else {
+      setErrorPType("");
+    }
   };
 
   const handleProducTasteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     setProduct({
       ...product,
       taste: e.target.value,
     });
+    if (value.trim() === "") {
+      setErrorTaste("არომატის დასახელება არ უნდა იყოს ცარიელი");
+    } else if (value.trim().length < 2) {
+      setErrorTaste("არომატის დასახელება უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს");
+    } else if (value.trim().length > 15) {
+      setErrorTaste("არომატის დასახელება უნდა შეიცავდეს მაქსიმუმ 15 სიმბოლოს");
+    } else {
+      setErrorTaste("");
+    }
   };
 
   const handleProducCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     setProduct({
       ...product,
       productCode: e.target.value,
     });
+    if (value.trim() === "") {
+      setErrorPcode("პროდუქტის კოდი არ უნდა იყოს ცარიელი");
+    } else if (value.trim().length < 2) {
+      setErrorPcode("პროდუქტის კოდი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს");
+    } else if (value.trim().length > 20) {
+      setErrorPcode("პროდუქტის კოდი უნდა შეიცავდეს მაქსიმუმ 20 სიმბოლოს");
+    } else {
+      setErrorPcode("");
+    }
   };
 
   return (
@@ -71,7 +137,11 @@ const AddProductDetailedDesc = () => {
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
                 value={product.brand}
                 onChange={handleProductBrandChange}
+                required
               />
+              {errorBrand && (
+                <p className="text-red-500 text-xs mt-1">{errorBrand}</p>
+              )}
             </div>
             <div>
               <label
@@ -88,7 +158,11 @@ const AddProductDetailedDesc = () => {
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
                 value={product.breed}
                 onChange={handleProductBreedChange}
+                required
               />
+              {errorBreed && (
+                <p className="text-red-500 text-xs mt-1">{errorBreed}</p>
+              )}
             </div>
             <div>
               <label
@@ -105,7 +179,11 @@ const AddProductDetailedDesc = () => {
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
                 value={product.weight}
                 onChange={handleProductWeightChange}
+                required
               />
+              {errorWeight && (
+                <p className="text-red-500 text-xs mt-1">{errorWeight}</p>
+              )}
             </div>
           </div>
           {/* მეორე მწკრივი */}
@@ -125,7 +203,11 @@ const AddProductDetailedDesc = () => {
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
                 value={product.productType}
                 onChange={handleProducTypeChange}
+                required
               />
+              {errorPType && (
+                <p className="text-red-500 text-xs mt-1">{errorPType}</p>
+              )}
             </div>
             <div>
               <label
@@ -142,7 +224,11 @@ const AddProductDetailedDesc = () => {
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
                 value={product.taste}
                 onChange={handleProducTasteChange}
+                required
               />
+              {errorTaste && (
+                <p className="text-red-500 text-xs mt-1">{errorTaste}</p>
+              )}
             </div>
             <div>
               <label
@@ -159,7 +245,11 @@ const AddProductDetailedDesc = () => {
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
                 value={product.productCode}
                 onChange={handleProducCodeChange}
+                required
               />
+              {errorPcode && (
+                <p className="text-red-500 text-xs mt-1">{errorPcode}</p>
+              )}
             </div>
           </div>
         </div>

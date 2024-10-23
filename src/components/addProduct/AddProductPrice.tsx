@@ -4,6 +4,8 @@ import { PostContext } from "../../features/PostContext";
 const AddProductPrice = () => {
   const { product, setProduct } = useContext(PostContext);
   const [isChecked, setIsChecked] = useState(false);
+  const [errorPrice, setErrorPrice] = useState("");
+  const [errorDiscount, setErrorDiscount] = useState("");
 
   const handleCheckboxChange = () => {
     const newCheckedState = !isChecked;
@@ -15,18 +17,40 @@ const AddProductPrice = () => {
   };
 
   const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    let price = +value;
+
+    if (isNaN(price) || price < 0) {
+      setErrorPrice("ფასი უნდა იყოს დადებითი რიცხვი");
+      price = 0;
+    } else {
+      setErrorPrice("");
+    }
+
     setProduct({
       ...product,
-      price: +e.target.value,
+      price: price,
     });
   };
 
   const handleProductDiscountChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const value = e.target.value;
+    let discount = +value;
+
+    if (discount > 100) {
+      setErrorDiscount("ფასდაკლება არ შეიძლება იყოს 100-ზე მეტი");
+      return;
+    } else if (isNaN(discount) || discount <= 0) {
+      discount = 0;
+    } else {
+      setErrorDiscount("");
+    }
+
     setProduct({
       ...product,
-      discount: +e.target.value,
+      discount: discount,
     });
   };
 
@@ -49,6 +73,9 @@ const AddProductPrice = () => {
             value={product.price}
             onChange={handleProductPriceChange}
           />
+          {errorPrice && (
+            <p className="text-red-500 text-xs mt-1">{errorPrice}</p>
+          )}
         </div>
         <div className="flex flex-col gap-[9px] mt-[20px]">
           <label htmlFor="sale" className="text-sm text-[#000]">
@@ -63,6 +90,9 @@ const AddProductPrice = () => {
             value={product.discount}
             onChange={handleProductDiscountChange}
           />
+          {errorDiscount && (
+            <p className="text-red-500 text-xs mt-1">{errorDiscount}</p>
+          )}
         </div>
         <div></div>
       </div>
