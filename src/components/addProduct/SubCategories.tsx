@@ -4,14 +4,15 @@ import { PostContext } from "../../features/PostContext";
 
 const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
   const { setProduct } = useContext(PostContext);
-  const [activeProduct, setActiveProduct] = useState<string | null>(null);
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
 
-  const handleActiveProduct = (buttonName: string) => {
+  const handleActiveCategory = (categoryId: string, title: string) => {
     setProduct((prevProduct) => ({
       ...prevProduct,
-      subCategoryId: buttonName,
+      subCategoryId: categoryId,
+      subCategoryTitle: title,
     }));
-    setActiveProduct(buttonName);
+    setActiveCategoryId(categoryId);
   };
 
   return (
@@ -23,9 +24,11 @@ const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
             <div key={categories._id}>
               <button
                 type="button"
-                onClick={() => handleActiveProduct(categories._id)}
+                onClick={() =>
+                  handleActiveCategory(categories._id, categories.title)
+                } // Pass title here
                 className={`text-[#000] text-sm p-[10px] rounded-[7px] ${
-                  activeProduct === categories._id
+                  activeCategoryId === categories._id
                     ? "border-[#EE5335] text-[#EE5335] border"
                     : "border-transparent border"
                 }`}

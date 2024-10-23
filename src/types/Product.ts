@@ -11,6 +11,26 @@ export interface Product {
   _id: string;
 }
 
+export interface ProductApi {
+  brand: string;
+  productType: string;
+  description: string;
+  title: string;
+  discount: number;
+  animalType: string;
+  price: number;
+  image: string | null;
+  catId: string | null;
+  mealDetails: {
+    weight: string;
+    aroma: string;
+    age: string;
+    breed: string;
+  };
+  breed: string;
+  code: string;
+}
+
 export interface ProductResponse {
   products: Product[];
   page?: number;
@@ -40,4 +60,3 @@ export interface SearchProduct {
   };
   discount: number;
 }
-

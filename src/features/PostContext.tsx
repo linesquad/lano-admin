@@ -15,6 +15,8 @@ export type ProductInfo = {
   animalId: string | null;
   subCategoryId: string | null;
   image: string | null;
+  subCategoryTitle: string;
+  animalTitle: string;
 };
 
 export interface ProductInfoInterface {
@@ -38,6 +40,8 @@ const initialState = {
     animalId: "",
     subCategoryId: "",
     image: "",
+    subCategoryTitle: "",
+    animalTitle: "",
   },
   setProduct: () => {},
 } as ProductInfoInterface;
@@ -51,22 +55,7 @@ type ProductInfoProviderProps = {
 export default function ProductInfoProvider({
   children,
 }: ProductInfoProviderProps) {
-  const [product, setProduct] = useState<ProductInfo>({
-    productName: "",
-    productDescription: "",
-    brand: "",
-    breed: "",
-    weight: "",
-    productType: "",
-    taste: "",
-    productCode: "",
-    price: 0,
-    discount: 0,
-    discountFlag: false,
-    animalId: "",
-    subCategoryId: "",
-    image: "",
-  });
+  const [product, setProduct] = useState<ProductInfo>(initialState.product);
 
   return (
     <PostContext.Provider value={{ product, setProduct }}>

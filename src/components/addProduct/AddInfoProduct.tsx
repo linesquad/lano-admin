@@ -12,10 +12,11 @@ const AddInfoProduct = () => {
   if (isError) return <div>Error</div>;
   if (!data) return <p>No Data!</p>;
 
-  const handleActiveAnimal = (animalId: string) => {
+  const handleActiveAnimal = (animalId: string, title: string) => {
     setProduct((prevProduct) => ({
       ...prevProduct,
       animalId: animalId,
+      animalTitle: title,
     }));
     setActiveAnimal(animalId);
   };
@@ -34,7 +35,7 @@ const AddInfoProduct = () => {
               <div key={animal._id}>
                 <button
                   type="button"
-                  onClick={() => handleActiveAnimal(animal._id)}
+                  onClick={() => handleActiveAnimal(animal._id, animal.title)}
                   className={`text-[#000] text-sm p-[10px] rounded-[7px] ${
                     activeAnimal === animal._id
                       ? "border-[#EE5335] text-[#EE5335] border"

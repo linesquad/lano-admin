@@ -17,7 +17,6 @@ const ProductContent = ({
   isError,
   error,
 }: ProductsContentProps) => {
-
   if (isLoading) {
     return (
       <div className="flex justify-center">

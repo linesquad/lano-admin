@@ -1,3 +1,5 @@
+import { ProductApi } from "../types/Product";
+
 export const fetchCategories = async () => {
   try {
     const response = await fetch("http://localhost:8000/category");
@@ -10,6 +12,28 @@ export const fetchCategories = async () => {
       throw error;
     }
     throw new Error("An unknown error occurred");
+  }
+};
+
+export const postProduct = async (product: ProductApi) => {
+  try {
+    const response = await fetch("http://localhost:8000/product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Category post failed: " + error.message);
+      throw error;
+    }
+    throw new Error("An unknown error occured");
   }
 };
 
