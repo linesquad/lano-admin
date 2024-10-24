@@ -17,7 +17,7 @@ const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
 
   return (
     <div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <h3 className="text-[#000] text-sm leading-normal">დანიშნულება</h3>
         <div className="flex gap-[10px]">
           {subData.map((categories) => (

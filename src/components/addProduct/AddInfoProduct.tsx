@@ -1,38 +1,22 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useGetAllCategory } from "../../hook/useGetAllCategory";
 import SubCategories from "./SubCategories";
 import { PostContext } from "../../features/PostContext";
 import { useDeleteCategory } from "../../hook/useDeleteCategory";
-import { useAddCategory } from "../../hook/useAddCategory";
+import { MdDeleteForever } from "react-icons/md";
+import { IoAddCircle } from "react-icons/io5";
+import Modal from "./AddCategoryModal";
 
 const AddInfoProduct = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { setProduct } = useContext(PostContext);
   const [activeAnimal, setActiveAnimal] = useState<string | null>(null);
   const { data, isLoading, isError } = useGetAllCategory();
   const { mutate: deleteCategory } = useDeleteCategory();
-  const { mutate: addCategory } = useAddCategory();
-  const [inputValue, setInputValue] = useState("");
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
   if (!data) return <p>No Data!</p>;
-
-  const handleInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    addCategory(inputValue, {
-      onSuccess: () => {
-        setInputValue("");
-        console.log("Category added successfully");
-      },
-      onError: (error) => {
-        console.error("Error adding category:", error);
-      },
-    });
-  };
 
   const handleActiveAnimal = (animalId: string, title: string) => {
     setProduct((prevProduct) => ({
@@ -47,16 +31,32 @@ const AddInfoProduct = () => {
     deleteCategory(animalId);
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="p-5 bg-white rounded-2xl w-[493px] h-[240px] relative">
+    <div className="p-5 bg-white rounded-2xl w-[493px] h-[300px] relative">
       <div className="flex flex-col gap-5">
-        <h1 className="text-[#000] font-semibold leading-normal">
-          ინფორმაცია პროდუქტზე
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-[#000] font-semibold leading-normal">
+            ინფორმაცია პროდუქტზე
+          </h1>
+          <IoAddCircle
+            color="#EE5335"
+            size={35}
+            className="cursor-pointer"
+            onClick={handleOpenModal}
+          />
+        </div>
 
         <div className="flex flex-col gap-4">
           <h3 className="text-[#000] text-sm leading-normal">კატეგორია</h3>
-          <div className="flex gap-[10px] ">
+          <div className="flex gap-[10px] flex-wrap">
             {data.map((animal) => (
               <div key={animal._id}>
                 <div className="flex">
@@ -72,10 +72,10 @@ const AddInfoProduct = () => {
                     {animal.title}
                   </button>
                   <button onClick={() => handleDeleteCategory(animal._id)}>
-                    X
+                    <MdDeleteForever color="#EE5335" />
                   </button>
                 </div>
-                <div className="absolute left-5 bottom-3">
+                <div className="absolute left-5 bottom-[30px]">
                   {activeAnimal === animal._id && (
                     <SubCategories subData={animal.subCategory} />
                   )}
@@ -83,20 +83,10 @@ const AddInfoProduct = () => {
               </div>
             ))}
           </div>
-          <form onSubmit={handleSubmit} className="flex">
-            <input
-              type="text"
-              className="border-2 border-black"
-              value={inputValue}
-              onChange={handleInputValue}
-              placeholder="დაამატე კატეგორია"
-            />
-            <button type="submit" className=" bg-blue-500 text-white rounded">
-              დამატება
-            </button>
-          </form>
         </div>
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

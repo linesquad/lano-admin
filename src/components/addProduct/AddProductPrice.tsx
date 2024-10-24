@@ -76,7 +76,9 @@ const AddProductPrice = () => {
             />
             {errorPrice && (
               <div className="absolute">
-                <p className="text-red-500 text-xs mt-1">{errorPrice}</p>
+                <p className="text-red-500 text-xs font-semibold mt-1">
+                  {errorPrice}
+                </p>
               </div>
             )}
           </div>
@@ -97,7 +99,9 @@ const AddProductPrice = () => {
             />
             {errorDiscount && (
               <div className="absolute">
-                <p className="text-red-500 text-xs mt-1">{errorDiscount}</p>
+                <p className="text-red-500 text-xs font-semibold mt-1">
+                  {errorDiscount}
+                </p>
               </div>
             )}
           </div>
