@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PostContext } from "../../features/PostContext";
 import { useGetProductById } from "../../hook/useGetProductById";
+import Loading from "../../ui/Loading";
+import Error from "../../ui/Error";
 
 const EditProductDescription = () => {
   const { editProduct, setEditProduct } = useContext(PostContext);
   const { id } = useParams();
-  const { data, isLoading, isError } = useGetProductById(id as string);
+  const { data, isLoading, isError, error } = useGetProductById(id as string);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleProductName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,18 +19,16 @@ const EditProductDescription = () => {
         ...editProduct,
         title: value,
       });
-      setErrorMessage(""); 
+      setErrorMessage("");
       return;
     }
 
-    
-    const noNumbers = /^[A-Za-zა-ჰ\s]+$/; 
+    const noNumbers = /^[A-Za-zა-ჰ\s]+$/;
     if (!noNumbers.test(value)) {
       setErrorMessage("მხოლოდ ასოებია დაშვებული!");
       return;
     }
 
-    
     setErrorMessage("");
 
     setEditProduct({
@@ -44,9 +44,9 @@ const EditProductDescription = () => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
-  if (!data) return <p>No Data!</p>;
+  if (isLoading) return "";
+  if (isError) return "";
+  if (!data) return <p></p>;
 
   return (
     <form className="p-5 bg-white rounded-2xl mt-[29px] w-[493px]">

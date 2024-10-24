@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { useGetProductById } from "../../hook/useGetProductById";
 import { useContext } from "react";
 import { PostContext } from "../../features/PostContext";
+import Loading from "../../ui/Loading";
+import Error from "../../ui/Error";
 
 const EditProductPrice = () => {
   const { id } = useParams();
-  const { data, isLoading, isError } = useGetProductById(id as string);
+  const { data, isLoading, isError, error } = useGetProductById(id as string);
   const { setEditProduct } = useContext(PostContext);
   const [isChecked, setIsChecked] = useState(false);
   const [priceValue, setPriceValue] = useState<string>("");
@@ -70,8 +72,21 @@ const EditProductPrice = () => {
     setIsChecked(!!saleValue);
   }, [saleValue]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center w-[700px] max-w-full">
+        <Loading width="350px" height="350px" />
+      </div>
+    );
+  if (isError)
+    return (
+      <div className="flex justify-center flex-col items-center w-[700px] max-w-full ">
+        <Error width="350px" height="350px" />
+        <p className="p-1 text-red-500 font-semibold">
+          {error.message} - ვერ მოიძებნა პროდუქტი
+        </p>
+      </div>
+    );
   if (!data) return <div>No data</div>;
 
   return (

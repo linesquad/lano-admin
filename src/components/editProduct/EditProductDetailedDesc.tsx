@@ -2,13 +2,14 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PostContext } from "../../features/PostContext";
 import { useGetProductById } from "../../hook/useGetProductById";
+import Error from "../../ui/Error";
+import Loading from "../../ui/Loading";
 
 const EditProductDetailedDesc = () => {
   const { editProduct, setEditProduct } = useContext(PostContext);
   const { id } = useParams();
-  const { data, isLoading, isError } = useGetProductById(id as string);
+  const { data, isLoading, isError, error } = useGetProductById(id as string);
 
-  // State for errors
   const [errors, setErrors] = useState<{ [key: string]: string }>({
     brand: "",
     breed: "",
@@ -36,13 +37,12 @@ const EditProductDetailedDesc = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-  
     if (value === "") {
       setEditProduct({
         ...editProduct,
         [name]: value,
       });
-      setErrors((prev) => ({ ...prev, [name]: "" })); 
+      setErrors((prev) => ({ ...prev, [name]: "" }));
       return;
     }
 
@@ -72,9 +72,11 @@ const EditProductDetailedDesc = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
-  if (!data) return <p>No Data!</p>;
+  if (isLoading) return "";
+
+  if (isError) return "";
+
+  if (!data) return <p></p>;
 
   return (
     <form className="p-5 bg-white rounded-2xl mt-[29px] w-[493px]">
@@ -101,7 +103,7 @@ const EditProductDetailedDesc = () => {
                 value={editProduct.brand || ""}
                 onChange={handleChange}
               />
-           
+
               <p className={`text-red-500 text-sm mt-1 h-5`}>{errors.brand}</p>
             </div>
             <div>
@@ -120,7 +122,7 @@ const EditProductDetailedDesc = () => {
                 value={editProduct.breed || ""}
                 onChange={handleChange}
               />
-          
+
               <p className={`text-red-500 text-sm mt-1 h-5`}>{errors.breed}</p>
             </div>
           </div>
@@ -142,7 +144,7 @@ const EditProductDetailedDesc = () => {
                 value={editProduct.productType || ""}
                 onChange={handleChange}
               />
-            
+
               <p className={`text-red-500 text-sm mt-1 h-5`}>
                 {errors.productType}
               </p>
@@ -163,7 +165,7 @@ const EditProductDetailedDesc = () => {
                 value={editProduct.code || ""}
                 onChange={handleChange}
               />
-             
+
               <p className={`text-red-500 text-sm mt-1 h-5`}>{errors.code}</p>
             </div>
           </div>
