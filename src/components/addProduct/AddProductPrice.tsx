@@ -59,40 +59,48 @@ const AddProductPrice = () => {
       <h1 className="text-[#000] font-semibold leading-normal">
         ინფორმაცია პროდუქტზე
       </h1>
-      <div className="flex gap-5">
+      <div className="flex gap-5 pb-6">
         <div className="flex flex-col gap-[9px] mt-[20px]">
           <label htmlFor="price" className="text-sm text-[#000]">
             ფასი
           </label>
-          <input
-            type="text"
-            id="price"
-            placeholder="ფასი"
-            className="outline-none border border-[#00000066] py-2 px-4 
+          <div className="relative">
+            <input
+              type="text"
+              id="price"
+              placeholder="ფასი"
+              className="outline-none border border-[#00000066] py-2 px-4 
             placeholder:text-sm placeholder:text-[#000] text-sm text-[#000] rounded-[7px] w-[122px]"
-            value={product.price}
-            onChange={handleProductPriceChange}
-          />
-          {errorPrice && (
-            <p className="text-red-500 text-xs mt-1">{errorPrice}</p>
-          )}
+              value={product.price}
+              onChange={handleProductPriceChange}
+            />
+            {errorPrice && (
+              <div className="absolute">
+                <p className="text-red-500 text-xs mt-1">{errorPrice}</p>
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex flex-col gap-[9px] mt-[20px]">
           <label htmlFor="sale" className="text-sm text-[#000]">
             Sale
           </label>
-          <input
-            type="text"
-            id="sale"
-            placeholder="sale"
-            className="outline-none border border-[#00000066] py-2 px-4 font-semibold placeholder:font-semibold
+          <div className="relative">
+            <input
+              type="text"
+              id="sale"
+              placeholder="sale"
+              className="outline-none border border-[#00000066] py-2 px-4 font-semibold placeholder:font-semibold
             placeholder:text-sm placeholder:text-[#EE5335] text-sm text-[#EE5335] rounded-[7px] w-[122px]"
-            value={product.discount}
-            onChange={handleProductDiscountChange}
-          />
-          {errorDiscount && (
-            <p className="text-red-500 text-xs mt-1">{errorDiscount}</p>
-          )}
+              value={product.discount}
+              onChange={handleProductDiscountChange}
+            />
+            {errorDiscount && (
+              <div className="absolute">
+                <p className="text-red-500 text-xs mt-1">{errorDiscount}</p>
+              </div>
+            )}
+          </div>
         </div>
         <div></div>
       </div>

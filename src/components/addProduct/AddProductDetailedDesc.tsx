@@ -129,19 +129,31 @@ const AddProductDetailedDesc = () => {
               >
                 ბრენდი
               </label>
-              <input
-                id="brand"
-                type="text"
-                placeholder="ბრენდი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
+              <div className="relative">
+                <input
+                  id="brand"
+                  type="text"
+                  placeholder="ბრენდი"
+                  className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[10px]
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-                value={product.brand}
-                onChange={handleProductBrandChange}
-                required
-              />
-              {errorBrand && (
-                <p className="text-red-500 text-xs mt-1">{errorBrand}</p>
-              )}
+                  value={product.brand}
+                  onChange={handleProductBrandChange}
+                  required
+                  maxLength={15}
+                />
+                {errorBrand && (
+                  <div className="absolute top-0 bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2">
+                    <span className="relative group">
+                      <p className="text-red-500 text-xs font-bold transition-opacity duration-300 group-hover:opacity-0">
+                        {errorBrand.slice(0, 20) + "..."}
+                      </p>
+                      <p className="absolute top-[-20px] bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2 text-red-500 text-xs font-bold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        {errorBrand}
+                      </p>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label
@@ -150,19 +162,31 @@ const AddProductDetailedDesc = () => {
               >
                 ჯიში
               </label>
-              <input
-                id="breed"
-                type="text"
-                placeholder="ჯიში"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
+              <div className="relative">
+                <input
+                  id="breed"
+                  type="text"
+                  placeholder="ჯიში"
+                  className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[10px]
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-                value={product.breed}
-                onChange={handleProductBreedChange}
-                required
-              />
-              {errorBreed && (
-                <p className="text-red-500 text-xs mt-1">{errorBreed}</p>
-              )}
+                  value={product.breed}
+                  onChange={handleProductBreedChange}
+                  required
+                  maxLength={15}
+                />
+                {errorBreed && (
+                  <div className="absolute top-0 bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2">
+                    <span className="relative group">
+                      <p className="text-red-500 text-xs font-bold transition-opacity duration-300 group-hover:opacity-0">
+                        {errorBreed.slice(0, 20) + "..."}
+                      </p>
+                      <p className="absolute top-[-20px] bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2 text-red-500 text-xs font-bold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        {errorBreed}
+                      </p>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label
@@ -171,19 +195,31 @@ const AddProductDetailedDesc = () => {
               >
                 წონა
               </label>
-              <input
-                id="weight"
-                type="text"
-                placeholder="წონა"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
+              <div className="relative">
+                <input
+                  id="weight"
+                  type="text"
+                  placeholder="წონა"
+                  className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[10px]
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-                value={product.weight}
-                onChange={handleProductWeightChange}
-                required
-              />
-              {errorWeight && (
-                <p className="text-red-500 text-xs mt-1">{errorWeight}</p>
-              )}
+                  value={product.weight}
+                  onChange={handleProductWeightChange}
+                  required
+                  maxLength={10}
+                />
+                {errorWeight && (
+                  <div className="absolute top-0 bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2">
+                    <span className="relative group">
+                      <p className="text-red-500 text-xs font-bold transition-opacity duration-300 group-hover:opacity-0">
+                        {errorWeight.slice(0, 20) + "..."}
+                      </p>
+                      <p className="absolute top-[-20px] bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2 text-red-500 text-xs font-bold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        {errorWeight}
+                      </p>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           {/* მეორე მწკრივი */}
@@ -195,19 +231,31 @@ const AddProductDetailedDesc = () => {
               >
                 პროდუქტის ტიპი
               </label>
-              <input
-                id="pType"
-                type="text"
-                placeholder="პროდუქტის ტიპი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
+              <div className="relative">
+                <input
+                  id="pType"
+                  type="text"
+                  placeholder="პროდუქტის ტიპი"
+                  className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[10px]
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-                value={product.productType}
-                onChange={handleProducTypeChange}
-                required
-              />
-              {errorPType && (
-                <p className="text-red-500 text-xs mt-1">{errorPType}</p>
-              )}
+                  value={product.productType}
+                  onChange={handleProducTypeChange}
+                  required
+                  maxLength={15}
+                />
+                {errorPType && (
+                  <div className="absolute top-0 bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2">
+                    <span className="relative group">
+                      <p className="text-red-500 text-xs font-bold transition-opacity duration-300 group-hover:opacity-0">
+                        {errorPType.slice(0, 20) + "..."}
+                      </p>
+                      <p className="absolute top-[-20px] bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2 text-red-500 text-xs font-bold opacity-0 transition-opacity duration-300 group-hover:opacity-100 ">
+                        {errorPType}
+                      </p>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label
@@ -216,19 +264,31 @@ const AddProductDetailedDesc = () => {
               >
                 არომატი
               </label>
-              <input
-                id="taste"
-                type="text"
-                placeholder="არომატი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
+              <div className="relative">
+                <input
+                  id="taste"
+                  type="text"
+                  placeholder="არომატი"
+                  className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[10px]
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-                value={product.taste}
-                onChange={handleProducTasteChange}
-                required
-              />
-              {errorTaste && (
-                <p className="text-red-500 text-xs mt-1">{errorTaste}</p>
-              )}
+                  value={product.taste}
+                  onChange={handleProducTasteChange}
+                  required
+                  maxLength={15}
+                />
+                {errorTaste && (
+                  <div className="absolute top-0 bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2">
+                    <span className="relative group">
+                      <p className="text-red-500 text-xs font-bold transition-opacity duration-300 group-hover:opacity-0">
+                        {errorTaste.slice(0, 20) + "..."}
+                      </p>
+                      <p className="absolute top-[-20px] bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2 text-red-500 text-xs font-bold opacity-0 transition-opacity duration-300 group-hover:opacity-100 ">
+                        {errorTaste}
+                      </p>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label
@@ -237,19 +297,31 @@ const AddProductDetailedDesc = () => {
               >
                 პროდუქტის კოდი
               </label>
-              <input
-                id="pcode"
-                type="text"
-                placeholder="პროდუქტის კოდი"
-                className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[8px]
+              <div className="relative">
+                <input
+                  id="pcode"
+                  type="text"
+                  placeholder="პროდუქტის კოდი"
+                  className="border border-[#00000066] outline-none py-3 px-4 rounded-[7px] mt-[10px]
               placeholder-[#000] placeholder:text-sm text-sm text-[#000] w-[205px]"
-                value={product.productCode}
-                onChange={handleProducCodeChange}
-                required
-              />
-              {errorPcode && (
-                <p className="text-red-500 text-xs mt-1">{errorPcode}</p>
-              )}
+                  value={product.productCode}
+                  onChange={handleProducCodeChange}
+                  required
+                  maxLength={20}
+                />
+                {errorPcode && (
+                  <div className="absolute top-0 bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2">
+                    <span className="relative group">
+                      <p className="text-red-500 text-xs font-bold transition-opacity duration-300 group-hover:opacity-0">
+                        {errorPcode.slice(0, 20) + "..."}
+                      </p>
+                      <p className="absolute top-[-20px] bg-white text-center w-[180px] left-1/2 transform -translate-x-1/2 text-red-500 text-xs font-bold opacity-0 transition-opacity duration-300 group-hover:opacity-100 ">
+                        {errorPcode}
+                      </p>
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
