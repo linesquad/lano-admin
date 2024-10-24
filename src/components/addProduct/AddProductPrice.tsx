@@ -4,6 +4,8 @@ import { PostContext } from "../../features/PostContext";
 const AddProductPrice = () => {
   const { product, setProduct } = useContext(PostContext);
   const [isChecked, setIsChecked] = useState(false);
+  const [errorPrice, setErrorPrice] = useState("");
+  const [errorDiscount, setErrorDiscount] = useState("");
 
   const handleCheckboxChange = () => {
     const newCheckedState = !isChecked;
@@ -15,18 +17,40 @@ const AddProductPrice = () => {
   };
 
   const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    let price = +value;
+
+    if (isNaN(price) || price < 0) {
+      setErrorPrice("ფასი უნდა იყოს დადებითი რიცხვი");
+      price = 0;
+    } else {
+      setErrorPrice("");
+    }
+
     setProduct({
       ...product,
-      price: +e.target.value,
+      price: price,
     });
   };
 
   const handleProductDiscountChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const value = e.target.value;
+    let discount = +value;
+
+    if (discount > 100) {
+      setErrorDiscount("ფასდაკლება არ შეიძლება იყოს 100-ზე მეტი");
+      return;
+    } else if (isNaN(discount) || discount <= 0) {
+      discount = 0;
+    } else {
+      setErrorDiscount("");
+    }
+
     setProduct({
       ...product,
-      discount: +e.target.value,
+      discount: discount,
     });
   };
 
@@ -35,34 +59,52 @@ const AddProductPrice = () => {
       <h1 className="text-[#000] font-semibold leading-normal">
         ინფორმაცია პროდუქტზე
       </h1>
-      <div className="flex gap-5">
+      <div className="flex gap-5 pb-6">
         <div className="flex flex-col gap-[9px] mt-[20px]">
           <label htmlFor="price" className="text-sm text-[#000]">
             ფასი
           </label>
-          <input
-            type="text"
-            id="price"
-            placeholder="ფასი"
-            className="outline-none border border-[#00000066] py-2 px-4 
+          <div className="relative">
+            <input
+              type="text"
+              id="price"
+              placeholder="ფასი"
+              className="outline-none border border-[#00000066] py-2 px-4 
             placeholder:text-sm placeholder:text-[#000] text-sm text-[#000] rounded-[7px] w-[122px]"
-            value={product.price}
-            onChange={handleProductPriceChange}
-          />
+              value={product.price}
+              onChange={handleProductPriceChange}
+            />
+            {errorPrice && (
+              <div className="absolute">
+                <p className="text-red-500 text-xs font-semibold mt-1">
+                  {errorPrice}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex flex-col gap-[9px] mt-[20px]">
           <label htmlFor="sale" className="text-sm text-[#000]">
             Sale
           </label>
-          <input
-            type="text"
-            id="sale"
-            placeholder="sale"
-            className="outline-none border border-[#00000066] py-2 px-4 font-semibold placeholder:font-semibold
+          <div className="relative">
+            <input
+              type="text"
+              id="sale"
+              placeholder="sale"
+              className="outline-none border border-[#00000066] py-2 px-4 font-semibold placeholder:font-semibold
             placeholder:text-sm placeholder:text-[#EE5335] text-sm text-[#EE5335] rounded-[7px] w-[122px]"
-            value={product.discount}
-            onChange={handleProductDiscountChange}
-          />
+              value={product.discount}
+              onChange={handleProductDiscountChange}
+            />
+            {errorDiscount && (
+              <div className="absolute">
+                <p className="text-red-500 text-xs font-semibold mt-1">
+                  {errorDiscount}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
         <div></div>
       </div>
