@@ -50,7 +50,7 @@ const AddInfoProduct = () => {
   };
 
   return (
-    <div className="p-5 bg-white rounded-2xl w-[493px] h-[300px] relative">
+    <div className="p-5 bg-white rounded-2xl w-[493px] h-[350px] relative">
       <div className="flex flex-col gap-5">
         <div className="flex items-center justify-between">
           <h1 className="text-[#000] font-semibold leading-normal">
@@ -90,7 +90,7 @@ const AddInfoProduct = () => {
                     </button>
                   </div>
                 </div>
-                <div className="absolute left-5 bottom-[30px]">
+                <div className="absolute left-5 bottom-0">
                   {activeAnimal === animal._id && (
                     <SubCategories subData={animal.subCategory} />
                   )}

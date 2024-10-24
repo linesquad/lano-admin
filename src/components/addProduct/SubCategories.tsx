@@ -19,9 +19,9 @@ const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
     <div>
       <div className="flex flex-col gap-2">
         <h3 className="text-[#000] text-sm leading-normal">დანიშნულება</h3>
-        <div className="flex gap-[10px]">
+        <div className="flex gap-[10px] flex-wrap">
           {subData.map((categories) => (
-            <div key={categories._id}>
+            <div key={categories._id} className="">
               <button
                 type="button"
                 onClick={() =>
