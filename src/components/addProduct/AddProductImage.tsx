@@ -2,6 +2,7 @@ import { GoPlus } from "react-icons/go";
 import { ChangeEvent, useContext, useRef, useState } from "react";
 import UploadImageAnimation from "./UploadImageAnimation";
 import { PostContext } from "../../features/PostContext";
+import DeleteIcon from "./DeleteIcon";
 
 export interface IMGResponse {
   message: string;
@@ -12,6 +13,7 @@ export interface IMGResponse {
 const AddProductImage = () => {
   const { product, setProduct } = useContext(PostContext);
   const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
   const ref = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,14 +34,41 @@ const AddProductImage = () => {
           setImgUrl(result.url);
           setProduct({
             ...product,
-            image: result.fileName,
+            image: result.url,
           });
+          setFileName(result.fileName);
         } else {
           console.error("Image upload failed:", result.message);
         }
       } catch (error) {
         console.error("Error uploading image:", error);
       }
+    }
+  };
+
+  const handleImgDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/delete-file?fileName=${fileName}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to delete the image. Status: ${response.status}`
+        );
+      }
+      setImgUrl(null);
+      setFileName(null);
+      setProduct({
+        ...product,
+        image: null,
+      });
+      console.log("Image deleted successfully");
+    } catch (error) {
+      console.error("Error deleting the image:", error);
     }
   };
 
@@ -67,7 +96,10 @@ const AddProductImage = () => {
           )}
         </div>
         <div className="flex gap-5 mt-5">
-          {imgUrl ? (
+          <div className="cursor-pointer" onClick={handleImgDelete}>
+            <DeleteIcon width="full" height="full" />
+          </div>
+          {/* {imgUrl ? (
             <img
               src={imgUrl}
               alt="image"
@@ -76,7 +108,7 @@ const AddProductImage = () => {
             />
           ) : (
             <UploadImageAnimation width="full" height="full" />
-          )}
+          )} */}
           <div className="flex items-center">
             <label
               htmlFor="fileUpload"
