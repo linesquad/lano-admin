@@ -8,6 +8,8 @@ import { IoAddCircle } from "react-icons/io5";
 import Modal from "./AddCategoryModal";
 import ModalSub from "./AddSubCategoryModal";
 import { MdAddBox } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import EditModal from "./EditModal";
 
 const AddInfoProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +19,9 @@ const AddInfoProduct = () => {
   const { mutate: deleteCategory } = useDeleteCategory();
   const [isOpenSubModal, setIsOpenSubModal] = useState(false);
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectEditId, setSelectEditId] = useState<string | null>(null);
+  const [animalTitle, setAnimalTitle] = useState("");
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
@@ -42,11 +47,18 @@ const AddInfoProduct = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setIsOpenSubModal(false);
+    setEditModalOpen(false);
   };
 
   const handleOpenModalSub = (parentId: string) => {
     setSelectedParentId(parentId);
     setIsOpenSubModal(true);
+  };
+
+  const handleOpenModalEdit = (parentId: string, animalTitle: string) => {
+    setSelectEditId(parentId);
+    setAnimalTitle(animalTitle);
+    setEditModalOpen(true);
   };
 
   return (
@@ -81,13 +93,24 @@ const AddInfoProduct = () => {
                   >
                     {animal.title}
                   </button>
-                  <div className="flex flex-col gap-1">
-                    <button onClick={() => handleDeleteCategory(animal._id)}>
-                      <MdDeleteForever color="#EE5335" size={20} />
-                    </button>
-                    <button onClick={() => handleOpenModalSub(animal._id)}>
-                      <MdAddBox color="#EE5335" size={20} />
-                    </button>
+                  <div className="flex gap-1 items-center">
+                    <div className="flex flex-col">
+                      <button onClick={() => handleDeleteCategory(animal._id)}>
+                        <MdDeleteForever color="#EE5335" size={20} />
+                      </button>
+                      <button onClick={() => handleOpenModalSub(animal._id)}>
+                        <MdAddBox color="#EE5335" size={20} />
+                      </button>
+                    </div>
+                    <div className="cursor-pointer">
+                      <button
+                        onClick={() =>
+                          handleOpenModalEdit(animal._id, animal.title)
+                        }
+                      >
+                        <FaEdit color="#EE5335" size={20} />
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div className="absolute left-5 bottom-0">
@@ -109,6 +132,12 @@ const AddInfoProduct = () => {
           parentId={selectedParentId}
         />
       )}
+      <EditModal
+        isOpen={editModalOpen}
+        onClose={handleCloseModal}
+        categoryID={selectEditId}
+        animalTitle={animalTitle}
+      />
     </div>
   );
 };

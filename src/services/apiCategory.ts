@@ -13,6 +13,27 @@ export const fetchCategories = async (): Promise<Category[]> => {
   }
 };
 
+export const editCategory = async (catId: string | null, title: string) => {
+  try {
+    const response = await fetch(`http://localhost:8000/category`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, catId }),
+    });
+
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error updating category:", error);
+    throw error;
+  }
+};
+
 export const deleteCategory = async (categoryId: string): Promise<void> => {
   try {
     const response = await fetch(
