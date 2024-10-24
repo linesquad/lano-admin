@@ -6,6 +6,8 @@ import { useDeleteCategory } from "../../hook/useDeleteCategory";
 import { MdDeleteForever } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
 import Modal from "./AddCategoryModal";
+import ModalSub from "./AddSubCategoryModal";
+import { MdAddBox } from "react-icons/md";
 
 const AddInfoProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +15,8 @@ const AddInfoProduct = () => {
   const [activeAnimal, setActiveAnimal] = useState<string | null>(null);
   const { data, isLoading, isError } = useGetAllCategory();
   const { mutate: deleteCategory } = useDeleteCategory();
+  const [isOpenSubModal, setIsOpenSubModal] = useState(false);
+  const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
@@ -37,6 +41,12 @@ const AddInfoProduct = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsOpenSubModal(false);
+  };
+
+  const handleOpenModalSub = (parentId: string) => {
+    setSelectedParentId(parentId);
+    setIsOpenSubModal(true);
   };
 
   return (
@@ -59,7 +69,7 @@ const AddInfoProduct = () => {
           <div className="flex gap-[10px] flex-wrap">
             {data.map((animal) => (
               <div key={animal._id}>
-                <div className="flex">
+                <div className="flex items-center">
                   <button
                     type="button"
                     onClick={() => handleActiveAnimal(animal._id, animal.title)}
@@ -71,9 +81,14 @@ const AddInfoProduct = () => {
                   >
                     {animal.title}
                   </button>
-                  <button onClick={() => handleDeleteCategory(animal._id)}>
-                    <MdDeleteForever color="#EE5335" />
-                  </button>
+                  <div className="flex flex-col gap-1">
+                    <button onClick={() => handleDeleteCategory(animal._id)}>
+                      <MdDeleteForever color="#EE5335" size={20} />
+                    </button>
+                    <button onClick={() => handleOpenModalSub(animal._id)}>
+                      <MdAddBox color="#EE5335" size={20} />
+                    </button>
+                  </div>
                 </div>
                 <div className="absolute left-5 bottom-[30px]">
                   {activeAnimal === animal._id && (
@@ -87,6 +102,13 @@ const AddInfoProduct = () => {
       </div>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+      {selectedParentId && (
+        <ModalSub
+          isOpen={isOpenSubModal}
+          onClose={handleCloseModal}
+          parentId={selectedParentId}
+        />
+      )}
     </div>
   );
 };

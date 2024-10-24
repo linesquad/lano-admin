@@ -37,6 +37,36 @@ export const postProduct = async (product: ProductApi) => {
   }
 };
 
+export const postSubCategory = async ({
+  title,
+  parentId,
+}: {
+  title: string;
+  parentId: string;
+}) => {
+  try {
+    const response = await fetch(`http://localhost:8000/category`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, parentId }),
+    });
+
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Category post failed: " + error.message);
+      throw error;
+    }
+    throw new Error("An unknown error occured");
+  }
+};
+
 export const fetchByCatId = async (id: string) => {
   try {
     const response = await fetch(

@@ -26,7 +26,7 @@ const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
                 type="button"
                 onClick={() =>
                   handleActiveCategory(categories._id, categories.title)
-                } // Pass title here
+                }
                 className={`text-[#000] text-sm p-[10px] rounded-[7px] ${
                   activeCategoryId === categories._id
                     ? "border-[#EE5335] text-[#EE5335] border"

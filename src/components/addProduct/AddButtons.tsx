@@ -27,6 +27,7 @@ const AddButtons = () => {
       code: product.productCode,
     });
   };
+
   return (
     <div className="flex gap-5 mt-5 p-5">
       <button
