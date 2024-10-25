@@ -3,11 +3,16 @@ import { SubCategory } from "../../types/Category";
 import { PostContext } from "../../features/PostContext";
 import { MdDeleteForever } from "react-icons/md";
 import { useDeleteCategory } from "../../hook/useDeleteCategory";
+import { FaEdit } from "react-icons/fa";
+import EditModalSubCategory from "./EditModalSubCategory";
 
 const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
   const { mutate: deleteSubCategory } = useDeleteCategory();
   const { setProduct } = useContext(PostContext);
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectEditId, setSelectEditId] = useState<string | null>(null);
+  const [animalTitle, setAnimalTitle] = useState("");
 
   const handleActiveCategory = (categoryId: string, title: string) => {
     setProduct((prevProduct) => ({
@@ -20,6 +25,15 @@ const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
 
   const handleDeleteSubCat = (subCatID: string) => {
     deleteSubCategory(subCatID);
+  };
+  const handleCloseModal = () => {
+    setEditModalOpen(false);
+  };
+
+  const handleOpenModalEdit = (parentId: string, animalTitle: string) => {
+    setSelectEditId(parentId);
+    setAnimalTitle(animalTitle);
+    setEditModalOpen(true);
   };
 
   return (
@@ -45,10 +59,24 @@ const SubCategories = ({ subData }: { subData: SubCategory[] }) => {
               <button onClick={() => handleDeleteSubCat(categories._id)}>
                 <MdDeleteForever color="#EE5335" size={20} />
               </button>
+              <button
+                onClick={() =>
+                  handleOpenModalEdit(categories._id, categories.title)
+                }
+              >
+                <FaEdit color="#EE5335" size={20} />
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      <EditModalSubCategory
+        isOpen={editModalOpen}
+        onClose={handleCloseModal}
+        categoryID={selectEditId}
+        animalTitle={animalTitle}
+      />
     </div>
   );
 };

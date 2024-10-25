@@ -10,7 +10,7 @@ interface ModalProps {
   animalTitle: string;
 }
 
-const EditModal: React.FC<ModalProps> = ({
+const EditModalSubCategory: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   categoryID,
@@ -38,7 +38,6 @@ const EditModal: React.FC<ModalProps> = ({
     });
     onClose();
   };
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-[#fa755a] p-8 rounded-md flex flex-col gap-6">
@@ -54,7 +53,7 @@ const EditModal: React.FC<ModalProps> = ({
             className="border-2 border-[#f96345] focus:outline-none focus:ring-0 "
             value={inputValue}
             onChange={handleInputValue}
-            placeholder="ჩაასწორე კატეგორია"
+            placeholder="ჩაასწორე ქვე-კატეგორია"
           />
           <div></div>
           <button
@@ -69,4 +68,4 @@ const EditModal: React.FC<ModalProps> = ({
   );
 };
 
-export default EditModal;
+export default EditModalSubCategory;
