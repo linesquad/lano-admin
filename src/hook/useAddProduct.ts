@@ -1,14 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
 import { postProduct } from "../services/apiCategories";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const useAddProduct = () => {
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: postProduct,
-    onSuccess: (data) => {
-      console.log("Product add succesfully" + data);
+    onSuccess: () => {
+      toast.success("პროდუქტი წარმატებით დაემატა 🥳");
+      navigate("/products");
     },
-    onError: (error) => {
-      console.error("Product does not add succesfully " + error);
+    onError: () => {
+      toast.error("პროდუქტი ვერ დაემატა 😿");
     },
   });
 };

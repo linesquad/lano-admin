@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { PostContext } from "../../features/PostContext";
 import useAddProduct from "../../hook/useAddProduct";
+import { toast } from "react-toastify";
 
 const AddButtons = () => {
   const { mutate: addProduct } = useAddProduct();
-  const { product } = useContext(PostContext);
+  const { product, setProduct } = useContext(PostContext);
 
   const handleAddProduct = () => {
     addProduct({
@@ -26,6 +27,27 @@ const AddButtons = () => {
       breed: product.breed,
       code: product.productCode,
     });
+    handleClear();
+  };
+
+  const handleClear = () => {
+    setProduct({
+      ...product,
+      brand: "",
+      subCategoryTitle: "",
+      productDescription: "",
+      productName: "",
+      discount: 0,
+      animalTitle: "",
+      price: 0,
+      image: "",
+      subCategoryId: "",
+      weight: "",
+      taste: "",
+      breed: "",
+      productCode: "",
+    });
+    toast.success("პროდუქტი გასუფთავდა 🤗");
   };
 
   return (
@@ -33,6 +55,7 @@ const AddButtons = () => {
       <button
         type="button"
         className="text-[#00000099] text-sm  px-[10px] py-[8px] border border-[#00000099] rounded-[7px] w-[154px]"
+        onClick={handleClear}
       >
         გასუფთავება
       </button>
