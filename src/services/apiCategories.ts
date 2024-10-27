@@ -1,8 +1,9 @@
 import { ProductApi } from "../types/Product";
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
 
 export const fetchCategories = async () => {
   try {
-    const response = await fetch("http://localhost:8000/category");
+    const response = await fetch(`${URL}category`);
     if (!response.ok) throw new Error(`Error: ${response.status}`);
     const data = await response.json();
     return data;
@@ -17,7 +18,7 @@ export const fetchCategories = async () => {
 
 export const postProduct = async (product: ProductApi) => {
   try {
-    const response = await fetch("http://localhost:8000/product", {
+    const response = await fetch(`${URL}product`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const postSubCategory = async ({
   parentId: string;
 }) => {
   try {
-    const response = await fetch(`http://localhost:8000/category`, {
+    const response = await fetch(`${URL}category`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,9 +70,7 @@ export const postSubCategory = async ({
 
 export const fetchByCatId = async (id: string) => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/product?catId=${id}&page=1`
-    );
+    const response = await fetch(`${URL}product?catId=${id}&page=1`);
     if (!response.ok) throw new Error(`Error: ${response.status}`);
     const data = await response.json();
     return data;

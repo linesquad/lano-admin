@@ -1,8 +1,8 @@
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
+
 export const fetchSaleProducts = async () => {
   try {
-    const response = await fetch(
-      "http://localhost:8000/product?discount=true&page=1"
-    );
+    const response = await fetch(`${URL}product?discount=true&page=1`);
     if (!response.ok) throw new Error(`Error: ${response.status}`);
     const data = await response.json();
     return data;

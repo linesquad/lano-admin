@@ -1,10 +1,12 @@
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
+
 export const fetchProductsWithPriceRange = async (
   minPrice: string,
   maxPrice: string
 ) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/product?minPrice=${minPrice}&maxPrice=${maxPrice}`
+      `${URL}product?minPrice=${minPrice}&maxPrice=${maxPrice}`
     );
 
     if (!response.ok) throw new Error(`Error: ${response.status}`);

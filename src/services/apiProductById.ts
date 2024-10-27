@@ -1,11 +1,10 @@
 import { EditProductInfo } from "../features/PostContext";
 import { ProductById } from "../types/ProductById";
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
 
 export const fetchProductById = async (id: string): Promise<ProductById> => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/product?productId=${id}`
-    );
+    const response = await fetch(`${URL}product?productId=${id}`);
     if (!response.ok) throw new Error(`Error: ${response.status}`);
     const data: ProductById = await response.json();
     return data;
@@ -22,7 +21,7 @@ export const putProduct = async (
   editedProduct: EditProductInfo
 ): Promise<EditProductInfo> => {
   try {
-    const response = await fetch(`http://localhost:8000/product`, {
+    const response = await fetch(`${URL}product`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

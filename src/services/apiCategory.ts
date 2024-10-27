@@ -1,8 +1,9 @@
 import { Category } from "../types/Category";
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
 
 export const fetchCategories = async (): Promise<Category[]> => {
   try {
-    const response = await fetch(`http://localhost:8000/category`);
+    const response = await fetch(`${URL}category`);
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
     const category: Category[] = await response.json();
@@ -15,7 +16,7 @@ export const fetchCategories = async (): Promise<Category[]> => {
 
 export const editCategory = async (catId: string | null, title: string) => {
   try {
-    const response = await fetch(`http://localhost:8000/category`, {
+    const response = await fetch(`${URL}category`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -36,12 +37,9 @@ export const editCategory = async (catId: string | null, title: string) => {
 
 export const deleteCategory = async (categoryId: string): Promise<void> => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/category?id=${categoryId}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await fetch(`${URL}category?id=${categoryId}`, {
+      method: "DELETE",
+    });
 
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
@@ -53,7 +51,7 @@ export const deleteCategory = async (categoryId: string): Promise<void> => {
 
 export const postCategory = async (newCategory: string): Promise<void> => {
   try {
-    const response = await fetch(`http://localhost:8000/category`, {
+    const response = await fetch(`${URL}category`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

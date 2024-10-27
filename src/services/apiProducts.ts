@@ -1,12 +1,11 @@
 import { ProductResponse, SearchProduct } from "../types/Product";
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
 
 export const fetchAllProducts = async (
   page: number
 ): Promise<ProductResponse> => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/product?products=true&page=${page}`
-    );
+    const response = await fetch(`${URL}product?products=true&page=${page}`);
 
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
@@ -23,12 +22,9 @@ export const fetchAllProducts = async (
 
 export const deleteProductById = async (id: string): Promise<void> => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/product?productId=${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await fetch(`${URL}product?productId=${id}`, {
+      method: "DELETE",
+    });
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
     console.log(`Product with ID ${id} has been deleted.`);
@@ -45,9 +41,7 @@ export const searchingProduct = async (
   input: string
 ): Promise<SearchProduct[]> => {
   try {
-    const response = await fetch(
-      `http://localhost:8000/product?searchTerm=${input}`
-    );
+    const response = await fetch(`${URL}product?searchTerm=${input}`);
 
     if (!response.ok) throw new Error(`Error: ${response.status}`);
 
