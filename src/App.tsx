@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { setupLocalAuth } from "./services/auth";
+import { setupSessionAuth } from "./services/auth";
 import ProtectedRoute from "./services/ProtectedRoutes";
 import AppLayout from "./ui/AppLayout";
 import Login from "./components/Login";
@@ -15,7 +15,7 @@ import SaleProducts from "./ui/SaleProducts";
 
 function App() {
   useEffect(() => {
-    setupLocalAuth();
+    setupSessionAuth;
   }, []);
 
   return (

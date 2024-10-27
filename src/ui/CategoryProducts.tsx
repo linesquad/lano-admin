@@ -9,7 +9,6 @@ export default function CategoryProducts() {
 
   const { isLoading, isError, error, data } =
     useGetCategoryProducts(validCategoryId);
-  console.log(data);
   return (
     <ProductContent
       data={data}
