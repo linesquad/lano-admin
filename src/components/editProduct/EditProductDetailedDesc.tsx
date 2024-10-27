@@ -2,13 +2,12 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PostContext } from "../../features/PostContext";
 import { useGetProductById } from "../../hook/useGetProductById";
-import Error from "../../ui/Error";
-import Loading from "../../ui/Loading";
+
 
 const EditProductDetailedDesc = () => {
   const { editProduct, setEditProduct } = useContext(PostContext);
   const { id } = useParams();
-  const { data, isLoading, isError, error } = useGetProductById(id as string);
+  const { data, isLoading, isError,  } = useGetProductById(id as string);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({
     brand: "",

@@ -2,13 +2,12 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PostContext } from "../../features/PostContext";
 import { useGetProductById } from "../../hook/useGetProductById";
-import Loading from "../../ui/Loading";
-import Error from "../../ui/Error";
+
 
 const EditProductDescription = () => {
   const { editProduct, setEditProduct } = useContext(PostContext);
   const { id } = useParams();
-  const { data, isLoading, isError, error } = useGetProductById(id as string);
+  const { data, isLoading, isError } = useGetProductById(id as string);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleProductName = (e: React.ChangeEvent<HTMLInputElement>) => {
