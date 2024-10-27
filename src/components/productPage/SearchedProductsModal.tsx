@@ -21,10 +21,9 @@ export default function SearchedProductsModal({
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const { mutate: deleteProduct } = useDeleteProducts();
-  console.log(data, "our data");
+
   const handleDeleteProduct = (id: string) => {
     deleteProduct(id);
-    console.log(id, "id");
     setDeleteModalOpen(false);
   };
   const modalRef = useRef<HTMLDivElement>(null);
@@ -48,7 +47,7 @@ export default function SearchedProductsModal({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose, clearInput, inputRef]);
-  console.log(data, "our data");
+
   if (!data) return <p>No Data!</p>;
   return (
     <div>
