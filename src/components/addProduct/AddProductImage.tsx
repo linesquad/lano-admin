@@ -3,6 +3,7 @@ import { ChangeEvent, useContext, useRef, useState } from "react";
 import UploadImageAnimation from "./UploadImageAnimation";
 import { PostContext } from "../../features/PostContext";
 import DeleteIcon from "./DeleteIcon";
+const URL = "https://lano2024-0b1bbc3f481c.herokuapp.com/";
 
 export interface IMGResponse {
   message: string;
@@ -24,7 +25,7 @@ const AddProductImage = () => {
       formData.append("image", image);
 
       try {
-        const response = await fetch("http://localhost:8000/upload", {
+        const response = await fetch(`${URL}upload`, {
           method: "POST",
           body: formData,
         });
@@ -48,12 +49,9 @@ const AddProductImage = () => {
 
   const handleImgDelete = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/delete-file?fileName=${fileName}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${URL}delete-file?fileName=${fileName}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         throw new Error(
@@ -99,16 +97,6 @@ const AddProductImage = () => {
           <div className="cursor-pointer" onClick={handleImgDelete}>
             <DeleteIcon width="full" height="full" />
           </div>
-          {/* {imgUrl ? (
-            <img
-              src={imgUrl}
-              alt="image"
-              className="border-[1.5px] rounded-lg border-[#EE5335] object-cover
-                 bg-no-repeat w-[154px] h-[154px]"
-            />
-          ) : (
-            <UploadImageAnimation width="full" height="full" />
-          )} */}
           <div className="flex items-center">
             <label
               htmlFor="fileUpload"
